@@ -5,12 +5,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "blockly": "^8.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
-    "react-split": "^2.0.14"
+    "react-split": "^2.0.14",
+    "react-blockly": "^7.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

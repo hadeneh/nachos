@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Coding from './pages/Coding';
-import MyBlockly from './pages/Blockly'
+import MyBlockly from './pages/Blockly2'
 
 const App = () => {
     return (
