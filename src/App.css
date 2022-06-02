@@ -10,13 +10,3 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
-.hero-img {
-  max-height: 1000px;
-}
-
-.login-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}

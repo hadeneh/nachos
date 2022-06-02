@@ -8,7 +8,7 @@ export const Hero = (props) => {
 					<div className='container'>
 						<div className='row'>
 							<div className='col-md-8 col-md-offset-2 intro-text'>
-								<img src="img/logo.png" style={{ height: "400px" }} />
+								<img src="img/logo.png" alt="Nachos Logo" style={{ height: "400px" }} />
 								<h1>Nachos</h1>
 								<p>Nachos (aka NachiOS) is an interface/simulation software for Nachi Robotic Manipulator.</p>
 								<Link to="/coding">

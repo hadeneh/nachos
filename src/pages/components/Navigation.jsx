@@ -25,7 +25,6 @@ export const HomeNavigation = () => {
           id='bs-example-navbar-collapse-1'
         >
           <ul className='nav navbar-nav navbar-right'>
-            <li><a href='#page-top' className='page-scroll'></a></li>
             <li><Link to="/coding">&lt; Start Coding &gt;</Link></li>
             <li><Link to="/">Docs</Link></li>
             <li><Link to="/">Help</Link></li>

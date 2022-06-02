@@ -726,5 +726,20 @@ label {
   cursor: col-resize;
 }
 
+/* SPLIT - Left and Right Box */
+.left-box {
+  color: white;
+  margin: 50px;
+  padding: 50px;
+  border-radius: 50px;
+  background-color: #0a5cb4;
+}
 
+.right-box {
+  color: white;
+  margin: 50px;
+  padding: 50px;
+  border-radius: 50px;
+  background-color: #1e7a46;
+}
 
