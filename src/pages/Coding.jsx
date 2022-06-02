@@ -1,18 +1,22 @@
-import { HomeNavigation } from "./components/Navigation";
-import { Hero } from "./components/Hero";
+import { Link } from "react-router-dom"
 import Split from "react-split";
 
 
 function Coding() {
     return (
         <Split  className="split" direction="horizontal" minSize={0} gutterSize={11} snapOffset={50}>
-            {/* BLOCKLY */}
-            <div>
+            
+            <div className="left-box" id="blocklyArea">
                 <h1>This is Blockly</h1>
+                <Link to="/blockly">
+									<button className='btn btn-custom btn-lg page-scroll'>
+										&lt; Open Blockly &gt;
+									</button>
+								</Link>
             </div>
-            {/* OUTPUT */}
-            <div>
-                <h1>Click button to Download</h1>
+
+            <div className="right-box">
+                <h1>Click button to Download (output)</h1>
             </div>
         </Split>
     );
