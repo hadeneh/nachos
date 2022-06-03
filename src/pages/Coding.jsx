@@ -5,14 +5,13 @@ import Split from "react-split";
 function Coding() {
     return (
         <Split  className="split" direction="horizontal" minSize={0} gutterSize={11} snapOffset={50}>
-            
             <div className="left-box" id="blocklyArea">
                 <h1>This is Blockly</h1>
                 <Link to="/blockly">
-					<button className='btn btn-custom btn-lg page-scroll'>
-						&lt; Open Blockly &gt;
-					</button>
-				</Link>
+                  <button className='btn btn-custom btn-lg page-scroll'>
+                    &lt; Open Blockly &gt;
+                  </button>
+                </Link>
             </div>
 
             <div className="right-box">

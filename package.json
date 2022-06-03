@@ -10,6 +10,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "react-split": "^2.0.14",
+    "blockly": "7.20211209.5",
     "react-blockly": "^7.0.0"
   },
   "scripts": {
