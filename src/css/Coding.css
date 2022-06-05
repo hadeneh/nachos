@@ -25,7 +25,7 @@
 	bottom: 0;
 	/* height: 90vh; */
 	
-	color: white;
+	/* color: #000; */
 	margin: 20px;
 	border-radius: 50px;
 	background-color: #0a5cb4;
@@ -49,4 +49,6 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
+
+	color: #000;
 }
