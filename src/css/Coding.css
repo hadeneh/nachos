@@ -1,36 +1,52 @@
-/* SPLIT */
+/***********************************
+	Split
+************************************/
 .split {
-    display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-  }
-  
-  .gutter.gutter-horizontal {
-    background-color: #eee;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
-    cursor: col-resize;
-  }
-  
+	display: flex;
+	flex-direction: row;
+	min-height: 100vh;
+}
+	
+.gutter.gutter-horizontal {
+	background-color: #eee;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+	cursor: col-resize;
+}
 
-/* SPLIT - Left and Right Box */
+
+/***********************************
+	SPLIT - Left and Right Boxes
+************************************/
 .left-box {
-    color: white;
-    margin: 50px;
-    /* padding: 50px; */
-    position: relative;
-    width: 50%;
-    height: 90vh;
-  
-    border-radius: 50px;
-    background-color: #0a5cb4;
-  }
-  
-  .right-box {
-    color: white;
-    margin: 50px;
-    padding: 50px;
-    border-radius: 50px;
-    background-color: #1e7a46;
-  }
+	position: relative;
+	width: 50%;
+	bottom: 0;
+	/* height: 90vh; */
+	
+	color: white;
+	margin: 20px;
+	border-radius: 50px;
+	background-color: #0a5cb4;
+}
+	
+.right-box {
+	color: white;
+	margin: 50px;
+	padding: 50px;
+	border-radius: 50px;
+	background-color: #1e7a46;
+}
+
+
+/***********************************
+	BlocklyComponent.css 
+************************************/
+#blocklyDiv {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}

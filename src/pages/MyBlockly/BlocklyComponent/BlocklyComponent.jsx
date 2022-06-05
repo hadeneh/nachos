@@ -4,8 +4,6 @@ import Blockly from 'blockly/core';
 import locale from 'blockly/msg/en';
 import 'blockly/blocks';
 
-import './BlocklyComponent.css';
-
 Blockly.setLocale(locale);
 
 class BlocklyComponent extends React.Component {
