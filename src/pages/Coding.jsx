@@ -3,12 +3,15 @@ import { Link } from "react-router-dom"
 import Split from "react-split";
 
 
-import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
+import BlocklyComponent, { Block, Value, Field, Shadow } from './MyBlockly/BlocklyComponent';
 
 import BlocklyJS from 'blockly/javascript';
 
-import './blocks/customblocks'
-import './generator/generator'
+import './MyBlockly/Blocks/customBlocks/customBlocks'
+import './MyBlockly/Blocks/customBlocks/generator/generator'
+
+import '../css/Coding.css';
+
 
 
 
@@ -33,7 +36,7 @@ class MyBlockly extends React.Component {
 					ref={this.simpleWorkspace}
 					readOnly={false} trashcan={true} media={'media/'}
 					move={{scrollbars: true, drag: true, wheel: true}}
-					grid={{spacing: 20, length: 5, colour: "#ccc", snap: false}}
+					grid={{spacing: 20, length: 4, colour: "#ccc", snap: false}}
 					comments={true}
 					zoom={{controls: true}}
 					// initialXml={`<xml xmlns="http://www.w3.org/1999/xhtml"> <block type="controls_ifelse" x="20" y="20"></block> </xml>`}
@@ -41,6 +44,7 @@ class MyBlockly extends React.Component {
 					<Block type="test_react_field" />
 					<Block type="test_react_date_field" />
 					<Block type="controls_ifelse" />
+					<Block type="controls_if" />
 					<Block type="logic_compare" />
 					<Block type="logic_operation" />
 					<Block type="controls_repeat_ext">
@@ -70,10 +74,6 @@ class MyBlockly extends React.Component {
 
 
 function Coding() {
-
-	// return (
-	// 	<MyBlockly />
-	// );
     return (
         <Split 
 			className="split" 
@@ -82,7 +82,7 @@ function Coding() {
 			snapOffset={50} 
 			sizes={[57, 43]}
 		>
-            <div className="left-box" id="blocklyArea">
+            <div className="left-box">
 				<MyBlockly />
             </div>
 
