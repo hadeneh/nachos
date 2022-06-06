@@ -35,7 +35,7 @@ const HomeNavigation = () => {
             type='button'
             className='navbar-toggle collapsed'
             data-toggle='collapse'
-            data-target='#bs-example-navbar-collapse-1'
+            data-target='#nachos-navbar'
           >
 
             <span className='sr-only'>Toggle navigation</span>
@@ -43,12 +43,12 @@ const HomeNavigation = () => {
             <span className='icon-bar'></span>
             <span className='icon-bar'></span>
           </button>
-          <a className='navbar-brand page-scroll' href='#page-top'>Nachos</a>
+          <Link to="/" className="navbar-brand">Nachos</Link>
         </div>
 
         <div
           className='collapse navbar-collapse'
-          id='bs-example-navbar-collapse-1'
+          id='nachos-navbar'
         >
           <ul className='nav navbar-nav navbar-right'>
             <li><Link to="/coding">&lt; Start Coding &gt;</Link></li>

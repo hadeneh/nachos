@@ -1,10 +1,11 @@
 /***********************************
 	Split
 ************************************/
+
 .split {
 	display: flex;
 	flex-direction: row;
-	min-height: 100vh;
+	min-height: 95vh;
 }
 	
 .gutter.gutter-horizontal {
@@ -19,30 +20,33 @@
 /***********************************
 	SPLIT - Left and Right Boxes
 ************************************/
+
 .left-box {
 	position: relative;
 	width: 50%;
 	bottom: 0;
 	/* height: 90vh; */
-	
-	/* color: #000; */
+
+	text-align: center;
+
 	margin: 20px;
-	border-radius: 50px;
-	background-color: #0a5cb4;
+	box-shadow: inset 0px 0px 100px 20px rgb(244, 130, 130);
+	border-radius: 10px;
 }
 	
 .right-box {
 	color: white;
-	margin: 50px;
-	padding: 50px;
+	margin: 20px;
+	padding: 20px 50px;
 	border-radius: 50px;
 	background-color: #1e7a46;
 }
 
 
 /***********************************
-	BlocklyComponent.css 
+	BlocklyComponent.css (Left Box)
 ************************************/
+
 #blocklyDiv {
 	position: absolute;
 	top: 0;
@@ -51,4 +55,26 @@
 	bottom: 0;
 
 	color: #000;
+}
+
+
+/***********************************
+	Code Output (Right Box)
+************************************/
+
+.rotated {	
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+
+	display: flex;
+	justify-content: center;
+  	align-items: center;
+}
+
+.rotated > h3 {
+	transform: rotate(90deg);
+	color: rgb(183, 7, 7);
+	font-weight: 900;
 }
