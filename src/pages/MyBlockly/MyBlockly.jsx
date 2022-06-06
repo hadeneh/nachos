@@ -9,6 +9,7 @@ import BlocklyComponent, {Block} from './BlocklyComponent'; // previously from "
 import SampleBlock from './Blocks/sampleBlocks/sampleBlocks'
 import { MyBlocks } from './Blocks/Blocks'
 
+
 class MyBlockly extends React.Component {
 	constructor(props) {
 		super(props);

@@ -299,9 +299,13 @@ export const TextCategoryBlocks = () => {
 
 export const ListsCategoryBlocks = () => {
     return (
-        <category name="Lists" colour="%{BKY_LISTS_HUE}">
-            <block type="lists_create_empty"></block>
-            <block type="lists_create_with"></block>
+        <category name="Lists" colour="#745ba5">
+            <block type="lists_create_with">
+                <mutation items="0"></mutation>
+            </block>
+            <block type="lists_create_with">
+                <mutation items="3"></mutation>
+            </block>
             <block type="lists_repeat">
                 <value name="NUM">
                     <shadow type="math_number">
@@ -311,9 +315,57 @@ export const ListsCategoryBlocks = () => {
             </block>
             <block type="lists_length"></block>
             <block type="lists_isEmpty"></block>
-            <block type="lists_indexOf"></block>
-            <block type="lists_getIndex"></block>
-            <block type="lists_setIndex"></block>
+            <block type="lists_indexOf">
+                <field name="END">FIRST</field>
+                <value name="VALUE">
+                    <block type="variables_get">
+                        <field name="VAR" id="+!0DZ#L7i#5/[1v~P~z^">list</field>
+                    </block>
+                </value>
+            </block>
+            <block type="lists_getIndex">
+                <mutation statement="false" at="true"></mutation>
+                <field name="MODE">GET</field>
+                <field name="WHERE">FROM_START</field>
+                <value name="VALUE">
+                    <block type="variables_get">
+                        <field name="VAR" id="+!0DZ#L7i#5/[1v~P~z^">list</field>
+                    </block>
+                </value>
+            </block>
+            <block type="lists_setIndex">
+                <mutation at="true"></mutation>
+                <field name="MODE">SET</field>
+                <field name="WHERE">FROM_START</field>
+                <value name="LIST">
+                    <block type="variables_get">
+                        <field name="VAR" id="+!0DZ#L7i#5/[1v~P~z^">list</field>
+                    </block>
+                </value>
+            </block>
+            <block type="lists_getSublist">
+                <mutation at1="true" at2="true"></mutation>
+                <field name="WHERE1">FROM_START</field>
+                <field name="WHERE2">FROM_START</field>
+                <value name="LIST">
+                    <block type="variables_get">
+                        <field name="VAR" id="+!0DZ#L7i#5/[1v~P~z^">list</field>
+                    </block>
+                </value>
+            </block>
+            <block type="lists_split">
+                <mutation mode="SPLIT"></mutation>
+                <field name="MODE">SPLIT</field>
+                <value name="DELIM">
+                    <shadow type="text">
+                        <field name="TEXT">,</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="lists_sort">
+                <field name="TYPE">NUMERIC</field>
+                <field name="DIRECTION">1</field>
+            </block>
         </category>
     );
 }
