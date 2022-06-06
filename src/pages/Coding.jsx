@@ -2,6 +2,7 @@ import React from 'react';
 import Split from "react-split";
 import { Link } from "react-router-dom"
 
+import Blockly from 'blockly/core';
 import BlocklyJS from 'blockly/javascript';
 
 import BlocklyComponent from './MyBlockly/BlocklyComponent'; // previously from "Coding.jsx" we had: import BlocklyComponent, { Block, Value, Field, Shadow } from './MyBlockly/BlocklyComponent';
@@ -18,11 +19,45 @@ class MyBlockly extends React.Component {
 
 	generateCode = () => {
 		var code = BlocklyJS.workspaceToCode(this.simpleWorkspace.current.workspace);
-		console.log(code);
-        
+		// console.log(code);
+		// alert(code);
+
         document.getElementById("code_output").innerHTML = code;
-		alert(code);
 	}
+
+    clear = () => {
+        this.simpleWorkspace.current.workspace.clear();
+    }
+
+    save = () => {
+        if (typeof(Storage) !== "undefined") {
+            var xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
+            localStorage.setItem("saved_blocks", Blockly.Xml.domToText(xml));
+            console.log("Workspace Saved.");
+            this.simpleWorkspace.current.workspace.clear();
+        } 
+        else {
+            alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
+        }
+    }
+
+    restore = () => {
+        if (typeof(Storage) !== "undefined") {
+            const saved_xml = localStorage.getItem("saved_blocks");
+            if (saved_xml != null) {
+                this.simpleWorkspace.current.workspace.clear();
+                var xml = Blockly.Xml.textToDom(saved_xml)
+                Blockly.Xml.domToWorkspace(this.simpleWorkspace.current.workspace, xml)
+                console.log("Workspace Restored.")
+            }
+            else {
+                alert("No saved workspace.")
+            }
+        } 
+        else {
+            alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
+        }
+    }
 
 	render() {
 		return (
@@ -30,22 +65,26 @@ class MyBlockly extends React.Component {
                 <nav id='menu' className='navbar navbar-default'>
                     <div className='container'>
                         <div className='navbar-header'>
-                            <button type='button' className='navbar-toggle collapsed' data-toggle='collapse' data-target='#nachos-navbar'>
-                                <span className='sr-only'>Toggle navigation</span>
-                                <span className='icon-bar'></span>
-                                <span className='icon-bar'></span>
-                                <span className='icon-bar'></span>
-                            </button>
                             <Link to="/" className="navbar-brand">Nachos</Link>
                         </div>
-
                         <div className='collapse navbar-collapse' id='nachos-navbar'>
-                            <ul className='nav navbar-nav navbar-left'>
-                                <li><a onClick={this.generateCode}>&lt; Generate Code &gt;</a></li>
-                                {/* <li><Link to="/coding">&lt; Generate Code &gt;</Link></li> */}
-                            </ul>
                             <ul className='nav navbar-nav navbar-right'>
                                 <li><Link to="/">Docs</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <nav id='menu2' className='navbar navbar-default'>
+                    <div className='container'>
+                        <div className='collapse navbar-collapse' id='nachos-navbar'>
+                            <ul className='nav navbar-nav navbar-left'>
+                                <li><a style={{cursor: "e-resize"}}>Workspace:</a></li>
+                                <li><a onClick={this.save}>&lt; Save &gt;</a></li>
+                                <li><a onClick={this.restore}>&lt; Restore &gt;</a></li>
+                                <li><a onClick={this.clear}>&lt; Clear &gt;</a></li>
+                            </ul>
+                            <ul className='nav navbar-nav navbar-right'>
+                                <li><a onClick={this.generateCode}>&lt; Generate Code &gt;</a></li>
                             </ul>
                         </div>
                     </div>
@@ -75,7 +114,7 @@ class MyBlockly extends React.Component {
                     </div>
 
                     <div className="right-box">
-                        <h1 id='code_output'>Generated code...</h1>
+                        <pre id='code_output'>Generated code...</pre>
                     </div>
                 </Split>
             </>

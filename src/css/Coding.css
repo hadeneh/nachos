@@ -5,7 +5,7 @@
 .split {
 	display: flex;
 	flex-direction: row;
-	min-height: 95vh;
+	height: 95vh;
 }
 	
 .gutter.gutter-horizontal {
@@ -27,8 +27,6 @@
 	bottom: 0;
 	/* height: 90vh; */
 
-	text-align: center;
-
 	margin: 20px;
 	box-shadow: inset 0px 0px 100px 20px rgb(244, 130, 130);
 	border-radius: 10px;
@@ -37,9 +35,10 @@
 .right-box {
 	color: white;
 	margin: 20px;
-	padding: 20px 50px;
-	border-radius: 50px;
-	background-color: #1e7a46;
+	padding: 50px;
+	border-radius: 10px;
+	background-color: #26ad61;
+	/* background-color: #1e7a46; */
 }
 
 
@@ -57,11 +56,6 @@
 	color: #000;
 }
 
-
-/***********************************
-	Code Output (Right Box)
-************************************/
-
 .rotated {	
 	position: absolute;
 	top: 0;
@@ -77,4 +71,13 @@
 	transform: rotate(90deg);
 	color: rgb(183, 7, 7);
 	font-weight: 900;
+}
+
+
+/***********************************
+	Code Output (Right Box)
+************************************/
+
+#code_output {
+	max-height: 100%;
 }

@@ -5,7 +5,9 @@ import './usedBlocks/nachosBlocks'
 export const InitBlocks = () => {
 	return (
 		`<xml xmlns="http://www.w3.org/1999/xhtml">
-			<block type="controls_if" x="20" y="20"></block>
+			<block type="controls_if" x="100" y="100">
+				
+			</block>
 		</xml>`
 	);
 }

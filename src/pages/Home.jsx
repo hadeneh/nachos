@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const Hero = (props) => {
+const Hero = () => {
 	return (
 		<header id='header'>
 			<div className='intro'>
@@ -16,7 +16,6 @@ const Hero = (props) => {
 										&lt; Start Coding &gt;
 									</button>
 								</Link>
-								{/* <a href='' className='btn btn-custom btn-lg page-scroll'>Get Started</a> */}
 							</div>
 						</div>
 					</div>
@@ -27,48 +26,41 @@ const Hero = (props) => {
 }
 
 const HomeNavigation = () => {
-  return (
-    <nav id='menu' className='navbar navbar-default navbar-fixed-top'>
-      <div className='container'>
-        <div className='navbar-header'>
-          <button
-            type='button'
-            className='navbar-toggle collapsed'
-            data-toggle='collapse'
-            data-target='#nachos-navbar'
-          >
+	return (
+		<nav id='menu' className='navbar navbar-default navbar-fixed-top'>
+			<div className='container'>
+				<div className='navbar-header'>
+					<button type='button' className='navbar-toggle collapsed' data-toggle='collapse' data-target='#nachos-navbar'>
+						<span className='sr-only'>Toggle navigation</span>
+						<span className='icon-bar'></span>
+						<span className='icon-bar'></span>
+						<span className='icon-bar'></span>
+					</button>
+					<Link to="/" className="navbar-brand">Nachos</Link>
+				</div>
 
-            <span className='sr-only'>Toggle navigation</span>
-            <span className='icon-bar'></span>
-            <span className='icon-bar'></span>
-            <span className='icon-bar'></span>
-          </button>
-          <Link to="/" className="navbar-brand">Nachos</Link>
-        </div>
-
-        <div
-          className='collapse navbar-collapse'
-          id='nachos-navbar'
-        >
-          <ul className='nav navbar-nav navbar-right'>
-            <li><Link to="/coding">&lt; Start Coding &gt;</Link></li>
-            <li><Link to="/">Docs</Link></li>
-            <li><Link to="/">Help</Link></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  )
+				<div className='collapse navbar-collapse' id='nachos-navbar'>
+					<ul className='nav navbar-nav navbar-left'>
+						<li><Link to="/coding">&lt; Start Coding &gt;</Link></li>
+					</ul>
+					<ul className='nav navbar-nav navbar-right'>
+						<li><Link to="/">Docs</Link></li>
+						<li><Link to="/">Help</Link></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	)
 }
 
 
 function Home() {
-    return (
-        <div>
-            <HomeNavigation />
-            <Hero />
-        </div>
-    );
+	return (
+		<div>
+			<HomeNavigation />
+			<Hero />
+		</div>
+	);
 }
 
 
