@@ -2,6 +2,15 @@ import * as basic from './usedBlocks/basicBlocks';
 import './usedBlocks/nachosBlocks'
 
 
+export const InitBlocks = () => {
+	return (
+		`<xml xmlns="http://www.w3.org/1999/xhtml">
+			<block type="controls_if" x="20" y="20"></block>
+		</xml>`
+	);
+}
+
+
 export const MyBlocks = () => {
 	return (
 		<>
