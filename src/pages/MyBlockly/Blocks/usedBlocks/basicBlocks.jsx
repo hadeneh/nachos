@@ -2,12 +2,6 @@ export const LogicCategoryBlocks = () => {
     return (
         <category name="Logic" colour="%{BKY_LOGIC_HUE}">
             <block type="controls_if"></block>
-            <block type="controls_if">
-                <mutation else="1"></mutation>
-            </block>
-            <block type="controls_if">
-                <mutation elseif="1" else="1"></mutation>
-            </block>
             <block type="logic_compare"></block>
             <block type="logic_operation"></block>
             <block type="logic_negate"></block>
@@ -24,28 +18,28 @@ export const LoopsCategoryBlocks = () => {
         <category name="Loops" colour="%{BKY_LOOPS_HUE}">
             <block type="controls_repeat_ext">
                 <value name="TIMES">
-                    <block type="math_number">
+                    <shadow type="math_number">
                         <field name="NUM">10</field>
-                    </block>
+                    </shadow>
                 </value>
             </block>
             <block type="controls_whileUntil"></block>
             <block type="controls_for">
                 <field name="VAR">i</field>
                 <value name="FROM">
-                    <block type="math_number">
+                    <shadow type="math_number">
                         <field name="NUM">1</field>
-                    </block>
+                    </shadow>
                 </value>
                 <value name="TO">
-                    <block type="math_number">
+                    <shadow type="math_number">
                         <field name="NUM">10</field>
-                    </block>
+                    </shadow>
                 </value>
                 <value name="BY">
-                    <block type="math_number">
+                    <shadow type="math_number">
                         <field name="NUM">1</field>
-                    </block>
+                    </shadow>
                 </value>
             </block>
             <block type="controls_forEach"></block>
@@ -57,69 +51,151 @@ export const LoopsCategoryBlocks = () => {
 
 export const MathCategoryBlocks = () => {
     return (
-        <category name="Math" colour="%{BKY_MATH_HUE}">
+        <category name="Math" colour="#5b67a5">
             <block type="math_number">
-                <field name="NUM">123</field>
+                <field name="NUM">0</field>
             </block>
-            <block type="math_arithmetic"></block>
-            <block type="math_single"></block>
-            <block type="math_trig"></block>
-            <block type="math_constant"></block>
-            <block type="math_number_property"></block>
-            <block type="math_round"></block>
-            <block type="math_on_list"></block>
-            <block type="math_modulo"></block>
-            <block type="math_constrain">
-                <value name="LOW">
-                    <block type="math_number">
+            <block type="math_arithmetic">
+                <field name="OP">ADD</field>
+                <value name="A">
+                    <shadow type="math_number">
                         <field name="NUM">1</field>
-                    </block>
+                    </shadow>
+                </value>
+                <value name="B">
+                    <shadow type="math_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="math_single">
+                <field name="OP">ROOT</field>
+                <value name="NUM">
+                    <shadow type="math_number">
+                        <field name="NUM">9</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="math_trig">
+                <field name="OP">SIN</field>
+                <value name="NUM">
+                    <shadow type="math_number">
+                        <field name="NUM">45</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="math_constant">
+                <field name="CONSTANT">PI</field>
+            </block>
+            <block type="math_number_property">
+                <mutation divisor_input="false"></mutation>
+                <field name="PROPERTY">EVEN</field>
+                <value name="NUMBER_TO_CHECK">
+                    <shadow type="math_number">
+                        <field name="NUM">0</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="math_round">
+                <field name="OP">ROUND</field>
+                <value name="NUM">
+                    <shadow type="math_number">
+                        <field name="NUM">3.1</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="math_on_list">
+                <mutation op="SUM"></mutation>
+                <field name="OP">SUM</field>
+            </block>
+            <block type="math_modulo">
+                <value name="DIVIDEND">
+                    <shadow type="math_number">
+                        <field name="NUM">64</field>
+                    </shadow>
+                </value>
+                <value name="DIVISOR">
+                    <shadow type="math_number">
+                        <field name="NUM">10</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="math_constrain">
+                <value name="VALUE">
+                    <shadow type="math_number">
+                        <field name="NUM">50</field>
+                    </shadow>
+                </value>
+                <value name="LOW">
+                    <shadow type="math_number">
+                        <field name="NUM">1</field>
+                    </shadow>
                 </value>
                 <value name="HIGH">
-                    <block type="math_number">
+                    <shadow type="math_number">
                         <field name="NUM">100</field>
-                    </block>
+                    </shadow>
                 </value>
             </block>
             <block type="math_random_int">
                 <value name="FROM">
-                    <block type="math_number">
+                    <shadow type="math_number">
                         <field name="NUM">1</field>
-                    </block>
+                    </shadow>
                 </value>
                 <value name="TO">
-                    <block type="math_number">
+                    <shadow type="math_number">
                         <field name="NUM">100</field>
-                    </block>
+                    </shadow>
                 </value>
             </block>
             <block type="math_random_float"></block>
-            <block type="math_atan2"></block>
         </category>
     );
+
+    // return (
+    //     <category name="Math" colour="%{BKY_MATH_HUE}">
+    //         <block type="math_number">
+    //             <field name="NUM">123</field>
+    //         </block>
+    //         <block type="math_arithmetic"></block>
+    //         <block type="math_single"></block>
+    //         <block type="math_trig"></block>
+    //         <block type="math_constant"></block>
+    //         <block type="math_number_property"></block>
+    //         <block type="math_round"></block>
+    //         <block type="math_on_list"></block>
+    //         <block type="math_modulo"></block>
+    //         <block type="math_constrain">
+    //             <value name="LOW">
+    //                 <block type="math_number">
+    //                     <field name="NUM">1</field>
+    //                 </block>
+    //             </value>
+    //             <value name="HIGH">
+    //                 <block type="math_number">
+    //                     <field name="NUM">100</field>
+    //                 </block>
+    //             </value>
+    //         </block>
+    //         <block type="math_random_int">
+    //             <value name="FROM">
+    //                 <block type="math_number">
+    //                     <field name="NUM">1</field>
+    //                 </block>
+    //             </value>
+    //             <value name="TO">
+    //                 <block type="math_number">
+    //                     <field name="NUM">100</field>
+    //                 </block>
+    //             </value>
+    //         </block>
+    //         <block type="math_random_float"></block>
+    //         <block type="math_atan2"></block>
+    //     </category>
+    // );
 }
 
-
-export const ListsCategoryBlocks = () => {
-    return (
-        <category name="Lists" colour="%{BKY_LISTS_HUE}">
-            <block type="lists_create_empty"></block>
-            <block type="lists_create_with"></block>
-            <block type="lists_repeat">
-                <value name="NUM">
-                    <block type="math_number">
-                        <field name="NUM">5</field>
-                    </block>
-                </value>
-            </block>
-            <block type="lists_length"></block>
-            <block type="lists_isEmpty"></block>
-            <block type="lists_indexOf"></block>
-            <block type="lists_getIndex"></block>
-            <block type="lists_setIndex"></block>
-        </category>
-    );
-}
 
 export const TextCategoryBlocks = () => {
     return (
@@ -220,6 +296,27 @@ export const TextCategoryBlocks = () => {
     );
 }
 
+
+export const ListsCategoryBlocks = () => {
+    return (
+        <category name="Lists" colour="%{BKY_LISTS_HUE}">
+            <block type="lists_create_empty"></block>
+            <block type="lists_create_with"></block>
+            <block type="lists_repeat">
+                <value name="NUM">
+                    <shadow type="math_number">
+                        <field name="NUM">5</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="lists_length"></block>
+            <block type="lists_isEmpty"></block>
+            <block type="lists_indexOf"></block>
+            <block type="lists_getIndex"></block>
+            <block type="lists_setIndex"></block>
+        </category>
+    );
+}
 
 // export const LibraryCategory = () => {
 //     return (

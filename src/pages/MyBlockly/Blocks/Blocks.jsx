@@ -1,9 +1,25 @@
-import * as all from './helperBlocks';
+import * as basic from './usedBlocks/basicBlocks';
+import './usedBlocks/nachosBlocks'
 
 
-export const BasicBlocks = () => {
+export const MyBlocks = () => {
 	return (
 		<>
+			<sep></sep>
+			<sep></sep>
+			<sep></sep>
+
+			<category name="Nachos Blocks" />
+			<sep></sep>
+
+			{/* ADD Nachos Blocks here... */}
+			<category name="Move" colour="359">
+				<block type="move"></block>
+				<block type="joint_deg"></block>
+				<block type="joint_rad"></block>
+				<block type="pose_rad"></block>
+        	</category>
+
 			<sep></sep>
 			<sep></sep>
 			<sep></sep>
@@ -11,11 +27,11 @@ export const BasicBlocks = () => {
 
 			<category name="Basic Blocks" />
 			<sep></sep>
-			<all.LogicCategoryBlocks />
-			<all.LoopsCategoryBlocks />
-			<all.MathCategoryBlocks />
-			<all.TextCategoryBlocks />
-			<all.ListsCategoryBlocks />
+			<basic.LogicCategoryBlocks />
+			<basic.LoopsCategoryBlocks />
+			<basic.MathCategoryBlocks />
+			<basic.TextCategoryBlocks />
+			<basic.ListsCategoryBlocks />
 
 			<sep></sep>
 			

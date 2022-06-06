@@ -7,7 +7,7 @@ import './Blocks/customBlocks/generator/generator'
 
 import BlocklyComponent, {Block} from './BlocklyComponent'; // previously from "Coding.jsx" we had: import BlocklyComponent, { Block, Value, Field, Shadow } from './MyBlockly/BlocklyComponent';
 import SampleBlock from './Blocks/sampleBlocks/sampleBlocks'
-import { BasicBlocks } from './Blocks/Blocks'
+import { MyBlocks } from './Blocks/Blocks'
 
 class MyBlockly extends React.Component {
 	constructor(props) {
@@ -35,7 +35,7 @@ class MyBlockly extends React.Component {
 					zoom={{controls: true}}
 					// initialXml={`<xml xmlns="http://www.w3.org/1999/xhtml"> <block type="controls_ifelse" x="20" y="20"></block> </xml>`}
 				>
-                    <BasicBlocks />
+                    <MyBlocks />
 				</BlocklyComponent>
 			</div>
 		);
