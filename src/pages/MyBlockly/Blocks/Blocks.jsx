@@ -1,3 +1,5 @@
+import '../ToolboxLabel/ToolboxLabel'
+
 import * as basic from './usedBlocks/basicBlocks';
 import './usedBlocks/nachosBlocks'
 
@@ -6,7 +8,7 @@ export const InitBlocks = () => {
 	return (
 		`<xml xmlns="http://www.w3.org/1999/xhtml">
 			<block type="controls_if" x="100" y="100">
-				
+
 			</block>
 		</xml>`
 	);
@@ -16,14 +18,9 @@ export const InitBlocks = () => {
 export const MyBlocks = () => {
 	return (
 		<>
-			<sep></sep>
-			<sep></sep>
-			<sep></sep>
-
-			<category name="Nachos Blocks" />
+			<toolboxlabel name="Nachos Blocks" img_src="./img/logo.png" css-label="customLabel"></toolboxlabel>
 			<sep></sep>
 
-			{/* ADD Nachos Blocks here... */}
 			<category name="Move" colour="359">
 				<block type="move"></block>
 				<block type="joint_deg"></block>
@@ -32,11 +29,9 @@ export const MyBlocks = () => {
         	</category>
 
 			<sep></sep>
-			<sep></sep>
-			<sep></sep>
 			{/* END of Nachos Blocks */}
 
-			<category name="Basic Blocks" />
+			<toolboxlabel name="Basic Blocks" img_src="./img/blockly_logo.svg" css-label="customLabel"></toolboxlabel>
 			<sep></sep>
 			<basic.LogicCategoryBlocks />
 			<basic.LoopsCategoryBlocks />
@@ -49,8 +44,6 @@ export const MyBlocks = () => {
 			<category name="Variables" custom="VARIABLE" colour="%{BKY_VARIABLES_HUE}" />
 			<category name="Functions" custom="PROCEDURE" colour="%{BKY_PROCEDURES_HUE}" />
 			
-			<sep></sep>
-			<sep></sep>
 			<sep></sep>
 		</>
 	);

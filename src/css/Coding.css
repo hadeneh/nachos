@@ -43,7 +43,7 @@
 
 
 /***********************************
-	BlocklyComponent.css (Left Box)
+	SPLIT (Left Box) - BlocklyComponent.css
 ************************************/
 
 #blocklyDiv {
@@ -75,9 +75,35 @@
 
 
 /***********************************
-	Code Output (Right Box)
+	SPLIT (Right Box) - Code Output
 ************************************/
 
-#code_output {
+/* This is a <pre> element */
+#code_output { 
 	max-height: 100%;
+}
+
+
+/***********************************
+	BLOCKLY - ToolboxLabel.js
+************************************/
+
+.customLabel {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+
+	padding: 10px 20px;
+}
+
+.customLabel label{
+	color: black;
+	font-size: 15px;
+	font-weight: bold;
+
+	margin: 0px;
+}
+
+.customLabel img {
+	height: 75px;
 }

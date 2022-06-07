@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import Blockly from 'blockly/core';
 import BlocklyJS from 'blockly/javascript';
 
-import BlocklyComponent from './MyBlockly/BlocklyComponent'; // previously from "Coding.jsx" we had: import BlocklyComponent, { Block, Value, Field, Shadow } from './MyBlockly/BlocklyComponent';
+import BlocklyComponent from './MyBlockly/BlocklyComponent';
 import { InitBlocks, MyBlocks } from './MyBlockly/Blocks/Blocks'
 
 import '../css/Coding.css';
