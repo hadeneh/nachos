@@ -7,7 +7,13 @@ import './usedBlocks/nachosBlocks'
 export const InitBlocks = () => {
 	return (
 		`<xml xmlns="http://www.w3.org/1999/xhtml">
-			<block type="start_end" x="80" y="80"></block>
+			<block type="start_end" x="80" y="80">
+				<value name="PROJ_NAME">
+					<shadow type="text">
+						<field name="TEXT">Concrete_3D_Printing</field>
+					</shadow>
+				</value>
+			</block>
 		</xml>`
 	);
 }
@@ -20,11 +26,19 @@ export const MyBlocks = () => {
 			<sep></sep>
 
 			<category name="Move" colour="359">
-				<block type="start_end"></block>
-				<block type="move"></block>
-				<block type="joint_deg"></block>
-				<block type="joint_rad"></block>
-				<block type="pose_rad"></block>
+				<block type="start_end">
+					<value name="PROJ_NAME"><shadow type="text"><field name="TEXT">Concrete_3D_Printing</field></shadow></value></block>
+				<block type="movex">
+					<value name="ACCELE_SMOOTH"><shadow type="acceleration_smooth"></shadow></value>
+					<value name="ACCU"><shadow type="accuracy"></shadow></value>
+				</block>
+				<block type="joint"></block>
+				<block type="pose"></block>
+				<block type="speed_mms"></block>
+				<block type="speed_sec"></block>
+				<block type="speed_percent"></block>
+				<block type="acceleration_smooth"></block>
+				<block type="accuracy"></block>
         	</category>
 
 			<sep></sep>
