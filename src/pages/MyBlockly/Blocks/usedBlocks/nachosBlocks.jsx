@@ -3,24 +3,82 @@
 
 import * as Blockly from 'blockly/core';
 
+
+
+/***********************************
+	Defining Nachos Generator
+************************************/
+
+const NachosGenerator = new Blockly.Generator('Nachos');
+
+NachosGenerator.PRECEDENCE = 0;
+// NachosGenerator.INDENT = ""; // maybe this line could be removed entirely (but in the tutorial it said that default is 2 spaces) (but also it will get applied when I use it and I don't think I will ever need indentation in Nachi's code)
+NachosGenerator.scrub_ = function(block, code, opt_thisOnly) {
+    const nextBlock = block.nextConnection && block.nextConnection.targetBlock();
+    if (nextBlock && !opt_thisOnly){
+        return code + ",\n" + NachosGenerator.blockToCode(nextBlock)
+    }
+    return code;
+};
+
+/** 
+ * Order of Generator functions to run (not entirely sure):
+    * 1. generator.workspaceToCode()
+    * 2. generator.statementToCode()
+    * 3. generator.scrub_() and blockToCode()
+    * 4. generator.valueToCode()
+    * 5. block.getFieldValue()
+*/
+
+
+/***********************************
+	Initialising each Nachos Block + Definition for its Generator
+************************************/
+
+init_start_end_Block();
 init_move_Block();
 init_joints_deg_Block();
 init_joints_rad_Block();
 init_pose_rad_Block();
 
 
+
+function init_start_end_Block() {
+    Blockly.Blocks['start_end'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("START");
+            this.appendStatementInput("LINES")
+                .setCheck(null);
+            this.appendDummyInput()
+                .appendField("END");
+            this.setInputsInline(false);
+            this.setColour(195);
+            this.setTooltip("");
+            this.setHelpUrl("");
+        }
+    };
+
+    NachosGenerator['start_end'] = function(block) {
+        var statements_lines = NachosGenerator.statementToCode(block, 'LINES');
+        var code = "START\n" + "END";
+        return code;
+    };
+}
+
+
 function init_move_Block() {
     Blockly.Blocks['move'] = {
         init: function() {
-          this.appendValueInput("position")
-              .setCheck(["joint_deg", "joint_rad"])
-              .appendField("Move to:");
-          this.setInputsInline(false);
-          this.setPreviousStatement(true, null);
-          this.setNextStatement(true, null);
-          this.setColour(230);
-       this.setTooltip("");
-       this.setHelpUrl("");
+            this.appendValueInput("position")
+                .setCheck(["joint_deg", "joint_rad"])
+                .appendField("Move to:");
+            this.setInputsInline(false);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(230);
+            this.setTooltip("");
+            this.setHelpUrl("");
         }
     };
 
@@ -176,3 +234,4 @@ function init_pose_rad_Block() {
 }
 
 
+export default NachosGenerator;

@@ -1,12 +1,13 @@
 import React from 'react';
 import Split from "react-split";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 import Blockly from 'blockly/core';
 import BlocklyJS from 'blockly/javascript';
 
 import BlocklyComponent from './MyBlockly/BlocklyComponent';
-import { InitBlocks, MyBlocks } from './MyBlockly/Blocks/Blocks'
+import { InitBlocks, MyBlocks } from './MyBlockly/Blocks/Blocks';
+import NachosGenerator from './MyBlockly/Blocks/usedBlocks/nachosBlocks';
 
 import '../css/Coding.css';
 
@@ -18,16 +19,20 @@ class MyBlockly extends React.Component {
 	}
 
 	generateCode = () => {
-		var code = BlocklyJS.workspaceToCode(this.simpleWorkspace.current.workspace);
+        let code;
+
+        try {
+            code = NachosGenerator.workspaceToCode(this.simpleWorkspace.current.workspace)
+        }
+        catch(error) {
+            code = "Oops... <br>Here is the Error: <br>" + error;
+        }
+		// var code = BlocklyJS.workspaceToCode(this.simpleWorkspace.current.workspace);
 		// console.log(code);
 		// alert(code);
-
-        document.getElementById("code_output").innerHTML = code;
+        if (code)   document.getElementById("code_output").innerHTML = code;
+        else        document.getElementById("code_output").innerHTML = "But... <br>There is nothing in the workspace... O_O";
 	}
-
-    clear = () => {
-        this.simpleWorkspace.current.workspace.clear();
-    }
 
     save = () => {
         if (typeof(Storage) !== "undefined") {
@@ -57,6 +62,11 @@ class MyBlockly extends React.Component {
         else {
             alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
         }
+    }
+
+
+    clear = () => {
+        this.simpleWorkspace.current.workspace.clear();
     }
 
 	render() {
@@ -114,7 +124,7 @@ class MyBlockly extends React.Component {
                     </div>
 
                     <div className="right-box">
-                        <pre id='code_output'>Generated code...</pre>
+                        <pre id='code_output'>Click on &lt;Generate Code&gt;</pre>
                     </div>
                 </Split>
             </>

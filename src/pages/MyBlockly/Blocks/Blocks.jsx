@@ -7,9 +7,7 @@ import './usedBlocks/nachosBlocks'
 export const InitBlocks = () => {
 	return (
 		`<xml xmlns="http://www.w3.org/1999/xhtml">
-			<block type="controls_if" x="100" y="100">
-
-			</block>
+			<block type="start_end" x="80" y="80"></block>
 		</xml>`
 	);
 }
@@ -22,6 +20,7 @@ export const MyBlocks = () => {
 			<sep></sep>
 
 			<category name="Move" colour="359">
+				<block type="start_end"></block>
 				<block type="move"></block>
 				<block type="joint_deg"></block>
 				<block type="joint_rad"></block>
