@@ -3,7 +3,6 @@ import Split from "react-split";
 import { Link } from "react-router-dom";
 
 import Blockly from 'blockly/core';
-import BlocklyJS from 'blockly/javascript';
 
 import BlocklyComponent from './MyBlockly/BlocklyComponent';
 import { InitBlocks, MyBlocks } from './MyBlockly/Blocks/Blocks';
@@ -21,15 +20,12 @@ class MyBlockly extends React.Component {
 	generateCode = () => {
         let code;
 
-        try {
-            code = NachosGenerator.workspaceToCode(this.simpleWorkspace.current.workspace)
-        }
-        catch(error) {
-            code = "Oops... <br>Here is the Error: <br>" + error;
-        }
-		// var code = BlocklyJS.workspaceToCode(this.simpleWorkspace.current.workspace);
-		// console.log(code);
-		// alert(code);
+        // Trying to <Generate Code> after the click of the button. 
+        // Catch any errors that might occur.
+        try             { code = NachosGenerator.workspaceToCode(this.simpleWorkspace.current.workspace); }
+        catch (error)   { code = "Oops... <br>Here is the Error: <br>" + error; }
+        
+        // Checking whether the Workspace is empty or not. If empty --> return an error
         if (code)   document.getElementById("code_output").innerHTML = code;
         else        document.getElementById("code_output").innerHTML = "But... <br>There is nothing in the workspace... O_O";
 	}
@@ -64,10 +60,10 @@ class MyBlockly extends React.Component {
         }
     }
 
-
     clear = () => {
         this.simpleWorkspace.current.workspace.clear();
     }
+
 
 	render() {
 		return (
