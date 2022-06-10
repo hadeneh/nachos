@@ -1,0 +1,110 @@
+/***********************************
+	Split
+************************************/
+
+.split {
+	display: flex;
+	flex-direction: row;
+	height: 95vh;
+}
+	
+.gutter.gutter-horizontal {
+	background-color: #eee;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+	cursor: col-resize;
+}
+
+
+/***********************************
+	SPLIT - Left and Right Boxes
+************************************/
+
+.left-box {
+	position: relative;
+	width: 50%;
+	bottom: 0;
+	/* height: 90vh; */
+
+	margin: 20px;
+	box-shadow: inset 0px 0px 100px 20px rgb(244, 130, 130);
+	border-radius: 10px;
+}
+	
+.right-box {
+	color: white;
+	margin: 20px;
+	border-radius: 10px;
+	background-color: #26ad61;
+	/* background-color: #1e7a46; */
+}
+
+
+/***********************************
+	SPLIT (Left Box) - BlocklyComponent.css
+************************************/
+
+#blocklyDiv {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	color: #000;
+}
+
+.rotated {	
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+
+	display: flex;
+	justify-content: center;
+  	align-items: center;
+}
+
+.rotated > h3 {
+	transform: rotate(90deg);
+	color: rgb(183, 7, 7);
+	font-weight: 900;
+}
+
+
+/***********************************
+	SPLIT (Right Box) - Code Output
+************************************/
+
+/* This is a <pre> element */
+#code_output { 
+	max-height: 100%;
+	margin: 50px 50px auto 50px;
+	/* overflow-x: scroll; */
+}
+
+
+/***********************************
+	BLOCKLY - ToolboxLabel.js
+************************************/
+
+.customLabel {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+
+	padding: 10px 20px;
+}
+
+.customLabel label{
+	color: black;
+	font-size: 15px;
+	font-weight: bold;
+
+	margin: 0px;
+}
+
+.customLabel img {
+	height: 75px;
+}
