@@ -130,8 +130,8 @@ function init_movex() {
 
         var value_mechanism = "";
         if (type_position) {
-            if      (type_position === "joint")  value_mechanism = "M1J";
-            else if (type_position === "pose")   value_mechanism = "M1X";
+            if      (type_position == "joint")  value_mechanism = "M1J";
+            else if (type_position == "pose")   value_mechanism = "M1X";
         }
 
         var value_position = NachosGenerator.valueToCode(block, 'POSITION', NachosGenerator.PRECEDENCE);
