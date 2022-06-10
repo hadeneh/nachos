@@ -12,11 +12,11 @@ import * as Blockly from 'blockly/core';
 const NachosGenerator = new Blockly.Generator('Nachos');
 
 NachosGenerator.PRECEDENCE = 0;
-// NachosGenerator.INDENT = ""; // maybe this line could be removed entirely (but in the tutorial it said that default is 2 spaces) (but also it will get applied when I use it and I don't think I will ever need indentation in Nachi's code)
-NachosGenerator.scrub_ = function(block, code, opt_thisOnly) {
+NachosGenerator.INDENT = "";
+NachosGenerator.scrub_ = function(block, code) {
     const nextBlock = block.nextConnection && block.nextConnection.targetBlock();
-    if (nextBlock && !opt_thisOnly){
-        return code + ",\n" + NachosGenerator.blockToCode(nextBlock)
+    if (nextBlock){
+        return code + "\n" + NachosGenerator.blockToCode(nextBlock);
     }
     return code;
 };
@@ -71,12 +71,18 @@ function init_start_end() {
 
     NachosGenerator['start_end'] = function(block) {
         var value_proj_name = NachosGenerator.valueToCode(block, 'PROJ_NAME', 0);
-        if (value_proj_name)    var code_proj_name = "' " + value_proj_name + "\n";
-        else                    var code_proj_name = "";
-
-        var statements_lines = NachosGenerator.statementToCode(block, 'LINES');
         
-        var code = code_proj_name + "END"; 
+        var code_proj_name = "";
+        if (value_proj_name) {
+            code_proj_name = `' ${value_proj_name} \n`;
+        }
+
+        var code_first_block = NachosGenerator.statementToCode(block, 'LINES');
+
+        var code_all_blocks = NachosGenerator.scrub_(block, code_first_block) 
+        
+        // var code = code_proj_name + "END"; 
+        var code = `${code_proj_name}\n${code_all_blocks}\nEND`; 
         return code;
     };
 }
