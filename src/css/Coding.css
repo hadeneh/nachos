@@ -76,7 +76,7 @@
 ************************************/
 
 /* This is a <pre> element */
-#code_output { 
+#code_box { 
 	max-height: 100%;
 	margin: 50px 50px auto 50px;
 }

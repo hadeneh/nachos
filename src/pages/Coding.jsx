@@ -11,6 +11,15 @@ import NachosGenerator from './MyBlockly/Blocks/usedBlocks/nachosBlocks';
 import '../css/Coding.css';
 
 
+import Prism from 'prismjs'
+
+import 'prismjs/themes/prism-okaidia.css'
+import 'prismjs/components/prism-jsx.js'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.js'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+
+
+
 class MyBlockly extends React.Component {
 	constructor(props) {
 		super(props);
@@ -27,11 +36,14 @@ class MyBlockly extends React.Component {
         
         // Checking whether the Workspace is empty or not. If workspace is empty --> return an error
         if (code)   document.getElementById("code_output").innerHTML = code;
-        else        document.getElementById("code_output").innerHTML = "But... <br>There is nothing in the workspace... O_O";
+        else        document.getElementById("code_output").innerHTML = "But... \nThere is nothing in the workspace... O_O";
+
+        Prism.highlightAll();
 	}
 
     componentDidMount() {
         this.resizeBlockly();
+        Prism.highlightAll();
     }
 
     resizeBlockly = () => {
@@ -131,7 +143,11 @@ class MyBlockly extends React.Component {
                     </div>
 
                     <div className="right-box">
-                        <pre id='code_output'>Click on &lt;Generate Code&gt;</pre>
+                        <pre id='code_box' className='line-numbers'>
+                            <code id='code_output' className="language-nachos-language">
+                                Click on &lt;Generate Code&gt;
+                            </code>
+                        </pre>
                     </div>
                 </Split>
             </>
