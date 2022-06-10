@@ -30,6 +30,15 @@ class MyBlockly extends React.Component {
         else        document.getElementById("code_output").innerHTML = "But... <br>There is nothing in the workspace... O_O";
 	}
 
+    componentDidMount() {
+        this.resizeBlockly();
+    }
+
+    resizeBlockly = () => {
+        Blockly.svgResize(this.simpleWorkspace.current.workspace)
+    }
+
+
     save = () => {
         if (typeof(Storage) !== "undefined") {
             var xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
@@ -100,8 +109,10 @@ class MyBlockly extends React.Component {
                     direction="horizontal" 
                     minSize={0} gutterSize={11} 
                     snapOffset={50} 
-                    sizes={[57, 43]}
-                    dragInterval={10}
+                    sizes={[50, 50]}
+                    // dragInterval={10}
+                    // onDrag={this.resizeBlockly}
+                    onDragEnd={this.resizeBlockly}  // I like this more than "onDrag"
                 >
                     <div className="left-box">
                         <div className="rotated"> <h3>Expanding...</h3> </div>
