@@ -25,7 +25,7 @@ class MyBlockly extends React.Component {
         try             { code = NachosGenerator.workspaceToCode(this.simpleWorkspace.current.workspace); }
         catch (error)   { code = "Oops... <br>Here is the Error: <br>" + error; }
         
-        // Checking whether the Workspace is empty or not. If empty --> return an error
+        // Checking whether the Workspace is empty or not. If workspace is empty --> return an error
         if (code)   document.getElementById("code_output").innerHTML = code;
         else        document.getElementById("code_output").innerHTML = "But... <br>There is nothing in the workspace... O_O";
 	}
@@ -93,13 +93,13 @@ class MyBlockly extends React.Component {
                     <div className='container'>
                         <div className='collapse navbar-collapse' id='nachos-navbar'>
                             <ul className='nav navbar-nav navbar-left'>
-                                <li><a style={{cursor: "e-resize"}}>Workspace:</a></li>
-                                <li><a onClick={this.save}>&lt; Save &gt;</a></li>
-                                <li><a onClick={this.restore}>&lt; Restore &gt;</a></li>
-                                <li><a onClick={this.clear}>&lt; Clear &gt;</a></li>
+                                <li><a href style={{cursor: "e-resize"}}>Workspace:</a></li>
+                                <li><a href onClick={this.save}>&lt; Save &gt;</a></li>
+                                <li><a href onClick={this.restore}>&lt; Restore &gt;</a></li>
+                                <li><a href onClick={this.clear}>&lt; Clear &gt;</a></li>
                             </ul>
                             <ul className='nav navbar-nav navbar-right'>
-                                <li><a onClick={this.generateCode}>&lt; Generate Code &gt;</a></li>
+                                <li><a href onClick={this.generateCode}>&lt; Generate Code &gt;</a></li>
                             </ul>
                         </div>
                     </div>

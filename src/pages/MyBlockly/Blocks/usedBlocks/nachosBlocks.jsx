@@ -44,6 +44,11 @@ init_acceleration();
 init_accuracy();
 
 
+init_var_local_int();
+init_var_local_float();
+
+init_outputs();
+
 basicBlocks_Generators();
 
 
@@ -119,13 +124,14 @@ function init_movex() {
 
     NachosGenerator['movex'] = function(block) {
         
-        try             { var type_position = block.getInputTargetBlock('POSITION').outputConnection.getCheck(); } 
-        catch (error)   { var type_position = null; }
+        var type_position;
+        try             { type_position = block.getInputTargetBlock('POSITION').outputConnection.getCheck(); } 
+        catch (error)   { type_position = null; }
 
         var value_mechanism = "";
         if (type_position) {
-            if      (type_position == "joint")  value_mechanism = "M1J";
-            else if (type_position == "pose")   value_mechanism = "M1X";
+            if      (type_position === "joint")  value_mechanism = "M1J";
+            else if (type_position === "pose")   value_mechanism = "M1X";
         }
 
         var value_position = NachosGenerator.valueToCode(block, 'POSITION', NachosGenerator.PRECEDENCE);
@@ -180,7 +186,7 @@ function init_joint() {
         var j4 = block.getFieldValue('j4');
         var j5 = block.getFieldValue('j5');
         var j6 = block.getFieldValue('j6');
-        var text_comment = block.getFieldValue('comment');
+        // var text_comment = block.getFieldValue('comment');
         // TODO: Assemble JavaScript into code variable.
         var code = `(${j1}, ${j2}, ${j3}, ${j4}, ${j5}, ${j6})`;
         // TODO: Change ORDER_NONE to the correct strength.
@@ -229,7 +235,7 @@ function init_pose() {
         var pose_rx = block.getFieldValue('rx');
         var pose_ry = block.getFieldValue('ry');
         var pose_rz = block.getFieldValue('rz');
-        var text_comment = block.getFieldValue('comment');
+        // var text_comment = block.getFieldValue('comment');
         // TODO: Assemble JavaScript into code variable.
         var code = `(${pose_x}, ${pose_y}, ${pose_z}, ${pose_rx}, ${pose_ry}, ${pose_rz})`;
         // TODO: Change ORDER_NONE to the correct strength.
@@ -366,9 +372,130 @@ function init_accuracy() {
 }
 
 
+
+function init_outputs() {
+    Blockly.Blocks['nachos_print'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("Print:")
+                .appendField(new Blockly.FieldTextInput("String to display..."), "PRINT");
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(285);
+            this.setTooltip("Text will be shown on the Teach Pendant display. Up to 199 single-byte alphanumeric.");
+            this.setHelpUrl("");
+        }
+    };
+    NachosGenerator['nachos_print'] = function(block) {
+        var text_print = block.getFieldValue('PRINT');
+        var code = `PRINT #0, ${text_print};`;
+        // TODO: Check if this works.
+        // TODO: Check what happens if ; was removed
+        return code;
+    };
+}
+
+
+function init_var_local_int() {
+    Blockly.Blocks['var_set_local_int'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("SET Local integer: #")
+                .appendField(new Blockly.FieldNumber(1, 1, 200, 1), "LOCATION");
+            this.appendDummyInput()
+                .appendField(" value=")
+                .appendField(new Blockly.FieldNumber(110, -2147483647, 2147483647, 1), "VALUE");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(330);
+            this.setTooltip("Variable number between 1-200. Value range is about +/- 2 billion.");
+            this.setHelpUrl("");
+        }
+    };
+    NachosGenerator['var_set_local_int'] = function(block) {
+        var number_location = block.getFieldValue('LOCATION');
+        var number_value = block.getFieldValue('VALUE');
+        var code = `LETLI L${number_location}%, ${number_value}`;
+        //TODO: is the syntax correct.
+        return code;
+    };
+
+
+    Blockly.Blocks['var_get_local_int'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("GET Local integer: #")
+                .appendField(new Blockly.FieldNumber(1, 1, 200, 1), "LOCATION");
+            this.setInputsInline(true);
+            this.setOutput(true, null);
+            this.setColour(330);
+            this.setTooltip("Variable number between 1-200.");
+            this.setHelpUrl("");
+        }
+    };
+    NachosGenerator['var_get_local_int'] = function(block) {
+        var number_location = block.getFieldValue('LOCATION');
+        var code = `L${number_location}%`;
+        // TODO: is this even correct??
+        return [code, NachosGenerator.PRECEDENCE];
+    };
+
+}
+
+function init_var_local_float() {
+    Blockly.Blocks['var_set_local_float'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("SET Local float: #")
+                .appendField(new Blockly.FieldNumber(1, 1, 200, 1), "LOCATION");
+            this.appendDummyInput()
+                .appendField(" value=")
+                .appendField(new Blockly.FieldNumber(55.08), "VALUE");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(330);
+            this.setTooltip("Variable number between 1-200. Value range between -1.0E38 ~ 1.0E38.");
+            this.setHelpUrl("");
+        }
+    };
+    NachosGenerator['var_set_local_float'] = function(block) {
+
+        var number_location = block.getFieldValue('LOCATION');
+        var number_value = block.getFieldValue('VALUE');
+        var code = `LETLF L${number_location}!, ${number_value}`;
+        //TODO: is the syntax correct.
+        return code;
+    };
+
+
+    Blockly.Blocks['var_get_local_float'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("GET Local float: #")
+                .appendField(new Blockly.FieldNumber(1, 1, 200, 1), "LOCATION");
+            this.setInputsInline(true);
+            this.setOutput(true, null);
+            this.setColour(330);
+            this.setTooltip("Variable number between 1-200.");
+            this.setHelpUrl("");
+        }
+    };
+    NachosGenerator['var_get_local_float'] = function(block) {
+        var number_location = block.getFieldValue('LOCATION');
+        var code = `L${number_location}!`;
+        // TODO: is this even correct??
+        return [code, NachosGenerator.PRECEDENCE];
+      };
+
+}
+
+
+
 function basicBlocks_Generators() {
     NachosGenerator['text'] = function(block) {
-        const code = block.getFieldValue('TEXT');
+        var code = block.getFieldValue('TEXT');
         return [code, NachosGenerator.PRECEDENCE];
     };
 }

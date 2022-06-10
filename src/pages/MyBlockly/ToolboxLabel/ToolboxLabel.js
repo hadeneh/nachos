@@ -2,9 +2,9 @@ import Blockly from 'blockly/core';
 
 class ToolboxLabel extends Blockly.ToolboxItem {
 
-    constructor(toolboxItemDef, parentToolbox) {
-      super(toolboxItemDef, parentToolbox);
-    }
+    // constructor(toolboxItemDef, parentToolbox) {
+    //   super(toolboxItemDef, parentToolbox);
+    // }
 
     /** override */
     init() {
