@@ -72,17 +72,15 @@ function init_start_end() {
     NachosGenerator['start_end'] = function(block) {
         var value_proj_name = NachosGenerator.valueToCode(block, 'PROJ_NAME', 0);
         
-        var code_proj_name = "";
+        var proj_name = "";
         if (value_proj_name) {
-            code_proj_name = `' ${value_proj_name} \n`;
+            proj_name = `' ${value_proj_name} \n`;
         }
 
         var code_first_block = NachosGenerator.statementToCode(block, 'LINES');
-
         var code_all_blocks = NachosGenerator.scrub_(block, code_first_block) 
         
-        // var code = code_proj_name + "END"; 
-        var code = `${code_proj_name}\n${code_all_blocks}\nEND`; 
+        var code = `${proj_name}\n${code_all_blocks}\nEND`;
         return code;
     };
 }
@@ -120,6 +118,16 @@ function init_movex() {
     };
 
     NachosGenerator['movex'] = function(block) {
+        
+        try             { var type_position = block.getInputTargetBlock('POSITION').outputConnection.getCheck(); } 
+        catch (error)   { var type_position = null; }
+
+        var value_mechanism = "";
+        if (type_position) {
+            if      (type_position == "joint")  value_mechanism = "M1J";
+            else if (type_position == "pose")   value_mechanism = "M1X";
+        }
+
         var value_position = NachosGenerator.valueToCode(block, 'POSITION', NachosGenerator.PRECEDENCE);
         var value_speed = NachosGenerator.valueToCode(block, 'SPEED', NachosGenerator.PRECEDENCE);
         var value_acceleration = NachosGenerator.valueToCode(block, 'ACCELERATION', NachosGenerator.PRECEDENCE);
@@ -127,7 +135,7 @@ function init_movex() {
         var value_interp = block.getFieldValue('INTERPOLATION');
 
 
-        var code = `MOVEX ${value_accuracy}, ${value_acceleration}, M1J, ${value_interp}, ${value_position}, ${value_speed}, H=1, MS`;
+        var code = `MOVEX ${value_accuracy}, ${value_acceleration}, ${value_mechanism}, ${value_interp}, ${value_position}, ${value_speed}, H=1, MS`;
         // TODO: Check the order of each parameter. Can it be changed?
         // TODO: Also check for whitespaces.
         return code;
