@@ -25,24 +25,33 @@ export const MyBlocks = () => {
 			<toolboxlabel name="Nachos Blocks" img_src="./img/logo.png" css-label="customLabel"></toolboxlabel>
 			<sep></sep>
 
-			<category name="Move" colour="359">
+
+			{/********************************** 
+			 * Start Category
+			************************************/}
+			<category name="Start" colour="120">
 				<block type="start_end">
-					<value name="PROJ_NAME"><shadow type="text"><field name="TEXT">Concrete_3D_Printing</field></shadow></value></block>
+					<value name="PROJ_NAME"><shadow type="text"><field name="TEXT">Concrete_3D_Printing</field></shadow></value>
+				</block>
+			</category>
+
+
+			{/********************************** 
+			 * Move Category
+			************************************/}
+			<category name="Move" colour="359">
 				<block type="movex">
-					<value name="ACCELE_SMOOTH"><shadow type="acceleration_smooth"></shadow></value>
-					<value name="ACCU"><shadow type="accuracy"></shadow></value>
+					<value name="ACCELERATION"><shadow type="acceleration"></shadow></value>
+					<value name="ACCURACY"><shadow type="accuracy"></shadow></value>
 				</block>
 				<block type="joint"></block>
 				<block type="pose"></block>
 				<block type="speed_mms"></block>
 				<block type="speed_sec"></block>
 				<block type="speed_percent"></block>
-				<block type="acceleration_smooth"></block>
-				<block type="accuracy"></block>
         	</category>
 
 			<sep></sep>
-			{/* END of Nachos Blocks */}
 
 			<toolboxlabel name="Basic Blocks" img_src="./img/blockly_logo.svg" css-label="customLabel"></toolboxlabel>
 			<sep></sep>

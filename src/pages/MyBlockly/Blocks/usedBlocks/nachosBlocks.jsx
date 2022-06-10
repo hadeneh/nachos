@@ -40,7 +40,7 @@ init_movex();
 init_joint();
 init_pose();
 init_speeds();
-init_acceleration_smooth();
+init_acceleration();
 init_accuracy();
 
 
@@ -85,28 +85,25 @@ function init_start_end() {
 function init_movex() {
     Blockly.Blocks['movex'] = {
         init: function() {
-            this.appendDummyInput()
-                .appendField("Move");
-            this.appendValueInput("POS")
+            this.appendValueInput("POSITION")
                 .setCheck(["joint", "pose"])
+                .appendField("Move to Position:");
+            this.appendValueInput("SPEED")
+                .setCheck(["speed_mms", "speed_sec", "speed_percent"])
                 .setAlign(Blockly.ALIGN_RIGHT)
-                .appendField("Position (joint, pose):");
+                .appendField("Speed:");
+            this.appendValueInput("ACCELERATION")
+                .setCheck("acceleration")
+                .setAlign(Blockly.ALIGN_RIGHT)
+                .appendField("Acceleration:");
+            this.appendValueInput("ACCURACY")
+                .setCheck("accuracy")
+                .setAlign(Blockly.ALIGN_RIGHT)
+                .appendField("Accuracy:");
             this.appendDummyInput()
                 .setAlign(Blockly.ALIGN_RIGHT)
                 .appendField("Interpolation:")
                 .appendField(new Blockly.FieldDropdown([["Linear","L"], ["Circular 1","C1"], ["Circular 2","C2"], ["OFF (Joint move)","P"]]), "INTERPOLATION");
-            this.appendValueInput("SPD")
-                .setCheck(["speed_mms", "speed_sec", "speed_percent"])
-                .setAlign(Blockly.ALIGN_RIGHT)
-                .appendField("Speed (mm/s, sec, %):");
-            this.appendValueInput("ACCELE_SMOOTH")
-                .setCheck("acceleration_smooth")
-                .setAlign(Blockly.ALIGN_RIGHT)
-                .appendField("Acceleration/Smoothness:");
-            this.appendValueInput("ACCU")
-                .setCheck("accuracy")
-                .setAlign(Blockly.ALIGN_RIGHT)
-                .appendField("Accuracy:");
             this.setInputsInline(false);
             this.setPreviousStatement(true, null);
             this.setNextStatement(true, null);
@@ -116,16 +113,19 @@ function init_movex() {
         }
     };
 
-    // Blockly.JavaScript['movex'] = function(block) {
-    //     var value_pos = Blockly.JavaScript.valueToCode(block, 'POS', Blockly.JavaScript.ORDER_ATOMIC);
-    //     var dropdown_interpolation = block.getFieldValue('INTERPOLATION');
-    //     var value_spd = Blockly.JavaScript.valueToCode(block, 'SPD', Blockly.JavaScript.ORDER_ATOMIC);
-    //     var value_accele_smooth = Blockly.JavaScript.valueToCode(block, 'ACCELE_SMOOTH', Blockly.JavaScript.ORDER_ATOMIC);
-    //     var value_accu = Blockly.JavaScript.valueToCode(block, 'ACCU', Blockly.JavaScript.ORDER_ATOMIC);
-    //     // TODO: Assemble JavaScript into code variable.
-    //     var code = '...;\n';
-    //     return code;
-    // };
+    NachosGenerator['movex'] = function(block) {
+        var value_position = NachosGenerator.valueToCode(block, 'POSITION', NachosGenerator.PRECEDENCE);
+        var value_speed = NachosGenerator.valueToCode(block, 'SPEED', NachosGenerator.PRECEDENCE);
+        var value_acceleration = NachosGenerator.valueToCode(block, 'ACCELERATION', NachosGenerator.PRECEDENCE);
+        var value_accuracy = NachosGenerator.valueToCode(block, 'ACCURACY', NachosGenerator.PRECEDENCE);
+        var value_interp = block.getFieldValue('INTERPOLATION');
+
+
+        var code = `MOVEX ${value_accuracy}, ${value_acceleration}, M1J, ${value_interp}, ${value_position}, ${value_speed}, H=1, MS`;
+        // TODO: Check the order of each parameter. Can it be changed?
+        // TODO: Also check for whitespaces.
+        return code;
+    };
 }
 
 
@@ -159,18 +159,18 @@ function init_joint() {
         }
       };
 
-      Blockly.JavaScript['joint'] = function(block) {
-        var number_j1 = block.getFieldValue('j1');
-        var number_j2 = block.getFieldValue('j2');
-        var number_j3 = block.getFieldValue('j3');
-        var number_j4 = block.getFieldValue('j4');
-        var number_j5 = block.getFieldValue('j5');
-        var number_j6 = block.getFieldValue('j6');
+      NachosGenerator['joint'] = function(block) {
+        var j1 = block.getFieldValue('j1');
+        var j2 = block.getFieldValue('j2');
+        var j3 = block.getFieldValue('j3');
+        var j4 = block.getFieldValue('j4');
+        var j5 = block.getFieldValue('j5');
+        var j6 = block.getFieldValue('j6');
         var text_comment = block.getFieldValue('comment');
         // TODO: Assemble JavaScript into code variable.
-        var code = '...';
+        var code = `(${j1}, ${j2}, ${j3}, ${j4}, ${j5}, ${j6})`;
         // TODO: Change ORDER_NONE to the correct strength.
-        return [code, Blockly.JavaScript.ORDER_NONE];
+        return [code, NachosGenerator.PRECEDENCE];
       };
 }
 
@@ -208,18 +208,18 @@ function init_pose() {
         }
       };
 
-      Blockly.JavaScript['pose'] = function(block) {
-        var number_x = block.getFieldValue('x');
-        var number_y = block.getFieldValue('y');
-        var number_z = block.getFieldValue('z');
-        var number_rx = block.getFieldValue('rx');
-        var number_ry = block.getFieldValue('ry');
-        var number_rz = block.getFieldValue('rz');
+      NachosGenerator['pose'] = function(block) {
+        var pose_x = block.getFieldValue('x');
+        var pose_y = block.getFieldValue('y');
+        var pose_z = block.getFieldValue('z');
+        var pose_rx = block.getFieldValue('rx');
+        var pose_ry = block.getFieldValue('ry');
+        var pose_rz = block.getFieldValue('rz');
         var text_comment = block.getFieldValue('comment');
         // TODO: Assemble JavaScript into code variable.
-        var code = '...';
+        var code = `(${pose_x}, ${pose_y}, ${pose_z}, ${pose_rx}, ${pose_ry}, ${pose_rz})`;
         // TODO: Change ORDER_NONE to the correct strength.
-        return [code, Blockly.JavaScript.ORDER_NONE];
+        return [code, NachosGenerator.PRECEDENCE];
       };
       
 }
@@ -239,12 +239,12 @@ function init_speeds() {
         }
     };
 
-    Blockly.JavaScript['speed_mms'] = function(block) {
-        var number_spd_mms = block.getFieldValue('SPD_mms');
+    NachosGenerator['speed_mms'] = function(block) {
+        var spd_mms = block.getFieldValue('SPD_mms');
         // TODO: Assemble JavaScript into code variable.
-        var code = '...';
+        var code = `S= ${spd_mms}`;
         // TODO: Change ORDER_NONE to the correct strength.
-        return [code, Blockly.JavaScript.ORDER_NONE];
+        return [code, NachosGenerator.PRECEDENCE];
     };
 
 
@@ -262,12 +262,12 @@ function init_speeds() {
         }
     };
 
-    Blockly.JavaScript['speed_sec'] = function(block) {
-        var number_spd_sec = block.getFieldValue('SPD_sec');
+    NachosGenerator['speed_sec'] = function(block) {
+        var spd_sec = block.getFieldValue('SPD_sec');
         // TODO: Assemble JavaScript into code variable.
-        var code = '...';
+        var code = `T= ${spd_sec}`;
         // TODO: Change ORDER_NONE to the correct strength.
-        return [code, Blockly.JavaScript.ORDER_NONE];
+        return [code, NachosGenerator.PRECEDENCE];
     };
 
     
@@ -284,39 +284,39 @@ function init_speeds() {
             this.setHelpUrl("");
         }
     };
-    Blockly.JavaScript['speed_percent'] = function(block) {
-        var number_spd_percent = block.getFieldValue('SPD_percent');
+    NachosGenerator['speed_percent'] = function(block) {
+        var spd_percent = block.getFieldValue('SPD_percent');
         // TODO: Assemble JavaScript into code variable.
-        var code = '...';
+        var code = `R= ${spd_percent}`;
         // TODO: Change ORDER_NONE to the correct strength.
-        return [code, Blockly.JavaScript.ORDER_NONE];
+        return [code, NachosGenerator.PRECEDENCE];
     };
 }
 
 
-function init_acceleration_smooth() {
-    Blockly.Blocks['acceleration_smooth'] = {
+function init_acceleration() {
+    Blockly.Blocks['acceleration'] = {
         init: function() {
             this.appendDummyInput()
                 .appendField("Acceleration:")
-                .appendField(new Blockly.FieldNumber(0, 0, 3, 1), "ACCELERATION")
-                .appendField("+ Smoothness:")
-                .appendField(new Blockly.FieldNumber(0, 0, 3, 1), "SMOOTH");
+                .appendField(new Blockly.FieldNumber(0, 0, 3, 1), "ACC")
+                .appendField(", Smoothness:")
+                .appendField(new Blockly.FieldNumber(0, 0, 3, 1), "SM");
             this.setInputsInline(false);
-            this.setOutput(true, "acceleration_smooth");
+            this.setOutput(true, "acceleration");
             this.setColour(230);
             this.setTooltip("Values are between 0 and 3. For high accelerations, use low values. For minimum smoothness, use low values. For example, A0 and S0 will provide the highest performance and accelerations.");
             this.setHelpUrl("");
         }
     };
 
-    Blockly.JavaScript['acceleration_smooth'] = function(block) {
-        var number_acceleration = block.getFieldValue('ACCELERATION');
-        var number_smooth = block.getFieldValue('SMOOTH');
+    NachosGenerator['acceleration'] = function(block) {
+        var acceleration = block.getFieldValue('ACC');
+        var smooth = block.getFieldValue('SM');
         // TODO: Assemble JavaScript into code variable.
-        var code = '...';
+        var code = `AC=${acceleration}, SM=${smooth}`;
         // TODO: Change ORDER_NONE to the correct strength.
-        return [code, Blockly.JavaScript.ORDER_NONE];
+        return [code, NachosGenerator.PRECEDENCE];
     };
 }
 
@@ -326,9 +326,9 @@ function init_accuracy() {
         init: function() {
             this.appendDummyInput()
                 .appendField("Accuracy:")
-                .appendField(new Blockly.FieldNumber(1, 1, 8, 1), "ACCURACY")
+                .appendField(new Blockly.FieldNumber(1, 1, 8, 1), "ACCU")
                 .appendField(" inPosition?")
-                .appendField(new Blockly.FieldCheckbox("TRUE"), "INPOSITION");
+                .appendField(new Blockly.FieldCheckbox("FALSE"), "INPOS");
             this.setInputsInline(false);
             this.setOutput(true, "accuracy");
             this.setColour(230);
@@ -337,13 +337,17 @@ function init_accuracy() {
         }
     };
 
-    Blockly.JavaScript['accuracy'] = function(block) {
-        var number_accuracy = block.getFieldValue('ACCURACY');
-        var checkbox_inposition = block.getFieldValue('INPOSITION') === 'TRUE';
+    NachosGenerator['accuracy'] = function(block) {
+        var number_accuracy = block.getFieldValue('ACCU');
+        var checkbox_inposition = block.getFieldValue('INPOS') === 'TRUE';
         // TODO: Assemble JavaScript into code variable.
-        var code = '...';
+
+        var code = `A=${number_accuracy}`;
+        if (checkbox_inposition) {
+            code += "P"
+        }
         // TODO: Change ORDER_NONE to the correct strength.
-        return [code, Blockly.JavaScript.ORDER_NONE];
+        return [code, NachosGenerator.PRECEDENCE];
     };
 }
 
