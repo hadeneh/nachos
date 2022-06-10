@@ -23,9 +23,8 @@
 
 .left-box {
 	position: relative;
-	width: 50%;
+	width: 100%;
 	bottom: 0;
-	/* height: 90vh; */
 
 	margin: 20px;
 	box-shadow: inset 0px 0px 100px 20px rgb(244, 130, 130);
@@ -37,7 +36,6 @@
 	margin: 20px;
 	border-radius: 10px;
 	background-color: #26ad61;
-	/* background-color: #1e7a46; */
 }
 
 
@@ -81,7 +79,6 @@
 #code_output { 
 	max-height: 100%;
 	margin: 50px 50px auto 50px;
-	/* overflow-x: scroll; */
 }
 
 
