@@ -29,11 +29,11 @@ export const MyBlocks = () => {
 			{/**********************************
 			 * Start Category
 			************************************/}
-			{/*<category name="Start" colour="120">*/}
-			{/*	<block type="start_end" id="PROJ_START">*/}
-			{/*		<value name="PROJ_NAME"><shadow type="text"><field name="TEXT">Concrete_3D_Printing</field></shadow></value>*/}
-			{/*	</block>*/}
-			{/*</category>*/}
+			<category name="Start" colour="120">
+				<block type="start_end" id="PROJ_START">
+					<value name="PROJ_NAME"><shadow type="text"><field name="TEXT">Concrete_3D_Printing</field></shadow></value>
+				</block>
+			</category>
 
 
 			{/********************************** 

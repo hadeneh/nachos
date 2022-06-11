@@ -73,7 +73,6 @@ function init_start_end() {
             this.setColour(120);
             this.setTooltip("");
             this.setHelpUrl("");
-            this.setDeletable(false);
         }
     };
 

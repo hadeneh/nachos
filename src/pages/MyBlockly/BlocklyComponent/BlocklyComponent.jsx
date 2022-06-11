@@ -16,7 +16,7 @@ class BlocklyComponent extends React.Component {
     componentDidMount() {
         const { initialXml, children, ...rest } = this.props;
         
-        this.primaryWorkspace = Blockly.inject(this.blocklyDiv.current, {toolbox: this.toolbox.current, ...rest});
+        this.primaryWorkspace = Blockly.inject(this.blocklyDiv.current, {toolbox: this.toolbox.current, ...rest, maxInstances:{"start_end": 1}});
 
         if (initialXml) {
             Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(initialXml), this.primaryWorkspace);

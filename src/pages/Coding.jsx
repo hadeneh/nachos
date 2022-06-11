@@ -53,11 +53,13 @@ class MyBlockly extends React.Component {
             }
             else {
                 document.getElementById("code_output").innerHTML = "But... \nThere is nothing in the workspace... O_O";
+                shake("code_box");
                 this.code_generated = false;
             }
         }
         catch (error) {
             document.getElementById("code_output").innerHTML = "Oops...\nHere is the Error:\n" + error;
+            shake("code_box");
             this.code_generated = false;
         }
 
@@ -65,11 +67,17 @@ class MyBlockly extends React.Component {
     }
     downloadCode = () => {
         if (this.code_generated) {
-            const blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-
             const start_block = this.simpleWorkspace.current.workspace.getBlockById("PROJ_START")
-            const program = start_block.getFieldValue("PROJ_NUMBER")
-            FileSaver.saveAs(blob, `ST133TF1-A.${program.toString().padStart(3, "0")}`);
+            const program_num = start_block.getFieldValue("PROJ_NUMBER")
+
+            const code_output = document.getElementById("code_output")
+            const temp_child = code_output.children[0];
+            code_output.removeChild(temp_child)
+            const content = code_output.innerHTML;
+            code_output.appendChild(temp_child);
+
+            const blob = new Blob([content], {type: "text/plain;charset=utf-8"});
+            FileSaver.saveAs(blob, `ST133TF1-A.${program_num.toString().padStart(3, "0")}`);
         }
         else {
             shake("code_box");
@@ -82,11 +90,10 @@ class MyBlockly extends React.Component {
     save_workspace = () => {
         if (typeof(Storage) !== "undefined") {
             const xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
-            if (xml) {
-                localStorage.setItem("saved_blocks", Blockly.Xml.domToText(xml));
-                console.log("Workspace Saved.");
-                this.simpleWorkspace.current.workspace.clear();
-            }
+
+            localStorage.setItem("saved_blocks", Blockly.Xml.domToText(xml));
+            console.log("Workspace Saved.");
+            this.simpleWorkspace.current.workspace.clear();
         }
         else {
             alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
@@ -111,6 +118,7 @@ class MyBlockly extends React.Component {
     }
     clear_workspace = () => {
         this.simpleWorkspace.current.workspace.clear();
+
     }
 
 
