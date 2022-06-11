@@ -15,8 +15,6 @@ import 'prismjs/components/prism-jsx.js'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
-import FileSaver from 'file-saver';
-
 
 class MyBlockly extends React.Component {
 
