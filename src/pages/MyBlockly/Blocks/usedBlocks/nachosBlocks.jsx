@@ -79,7 +79,7 @@ function init_start_end() {
         
         var proj_name = "";
         if (value_proj_name) {
-            proj_name = `' ${value_proj_name} \n`;
+            proj_name = `' ${value_proj_name}`;
         }
 
         var code_first_block = NachosGenerator.statementToCode(block, 'LINES');
@@ -112,7 +112,7 @@ function init_movex() {
             this.appendDummyInput()
                 .setAlign(Blockly.ALIGN_RIGHT)
                 .appendField("Interpolation:")
-                .appendField(new Blockly.FieldDropdown([["Linear","L"], ["Circular 1","C1"], ["Circular 2","C2"], ["OFF (Joint move)","P"]]), "INTERPOLATION");
+                .appendField(new Blockly.FieldDropdown([["Joint","P"], ["Linear","L"], ["Circular 1","C1"], ["Circular 2","C2"]]), "INTERPOLATION");
             this.setInputsInline(false);
             this.setPreviousStatement(true, null);
             this.setNextStatement(true, null);
@@ -258,11 +258,10 @@ function init_speeds() {
             this.setHelpUrl("");
         }
     };
-
     NachosGenerator['speed_mms'] = function(block) {
         var spd_mms = block.getFieldValue('SPD_mms');
         // TODO: Assemble JavaScript into code variable.
-        var code = `S= ${spd_mms}`;
+        var code = `S=${spd_mms}`;
         // TODO: Change ORDER_NONE to the correct strength.
         return [code, NachosGenerator.PRECEDENCE];
     };
@@ -281,11 +280,10 @@ function init_speeds() {
             this.setHelpUrl("");
         }
     };
-
     NachosGenerator['speed_sec'] = function(block) {
         var spd_sec = block.getFieldValue('SPD_sec');
         // TODO: Assemble JavaScript into code variable.
-        var code = `T= ${spd_sec}`;
+        var code = `T=${spd_sec}`;
         // TODO: Change ORDER_NONE to the correct strength.
         return [code, NachosGenerator.PRECEDENCE];
     };
@@ -307,7 +305,7 @@ function init_speeds() {
     NachosGenerator['speed_percent'] = function(block) {
         var spd_percent = block.getFieldValue('SPD_percent');
         // TODO: Assemble JavaScript into code variable.
-        var code = `R= ${spd_percent}`;
+        var code = `R=${spd_percent}`;
         // TODO: Change ORDER_NONE to the correct strength.
         return [code, NachosGenerator.PRECEDENCE];
     };
