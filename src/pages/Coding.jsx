@@ -67,17 +67,27 @@ class MyBlockly extends React.Component {
     }
     downloadCode = () => {
         if (this.code_generated) {
-            const start_block = this.simpleWorkspace.current.workspace.getBlockById("PROJ_START")
-            const program_num = start_block.getFieldValue("PROJ_NUMBER")
+            let start_block = this.simpleWorkspace.current.workspace.getBlockById("PROJ_START");
+            let program_num = start_block.getFieldValue("PROJ_NUMBER");
+            const filename = `ST133TF1-A.${program_num.toString().padStart(3, "0")}`
 
-            const code_output = document.getElementById("code_output")
-            const temp_child = code_output.children[0];
-            code_output.removeChild(temp_child)
+
+            let code_output = document.getElementById("code_output");
+            let temp_child = code_output.children[0];
+            code_output.removeChild(temp_child);
             const content = code_output.innerHTML;
             code_output.appendChild(temp_child);
 
-            const blob = new Blob([content], {type: "text/plain;charset=utf-8"});
-            FileSaver.saveAs(blob, `ST133TF1-A.${program_num.toString().padStart(3, "0")}`);
+
+            const element = document.createElement('a');
+            element.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(content);
+            element.target = '_blank';
+            element.download = filename;
+            element.style.display = 'none';
+
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
         }
         else {
             shake("code_box");
