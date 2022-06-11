@@ -7,7 +7,7 @@ import './usedBlocks/nachosBlocks'
 export const InitBlocks = () => {
 	return (
 		`<xml xmlns="http://www.w3.org/1999/xhtml">
-			<block type="start_end" x="80" y="80">
+			<block type="start_end" id="PROJ_START" x="80" y="80">
 				<value name="PROJ_NAME">
 					<shadow type="text">
 						<field name="TEXT">Concrete_3D_Printing</field>
@@ -26,14 +26,14 @@ export const MyBlocks = () => {
 			<sep></sep>
 
 
-			{/********************************** 
+			{/**********************************
 			 * Start Category
 			************************************/}
-			<category name="Start" colour="120">
-				<block type="start_end">
-					<value name="PROJ_NAME"><shadow type="text"><field name="TEXT">Concrete_3D_Printing</field></shadow></value>
-				</block>
-			</category>
+			{/*<category name="Start" colour="120">*/}
+			{/*	<block type="start_end" id="PROJ_START">*/}
+			{/*		<value name="PROJ_NAME"><shadow type="text"><field name="TEXT">Concrete_3D_Printing</field></shadow></value>*/}
+			{/*	</block>*/}
+			{/*</category>*/}
 
 
 			{/********************************** 

@@ -58,7 +58,9 @@ function init_start_end() {
         init: function() {
             this.appendValueInput("PROJ_NAME")
                 .setCheck("String")
-                .appendField("Program Name:");
+                .appendField("Program")
+                .appendField(new Blockly.FieldNumber(0, 1, 9999, 1), "PROJ_NUMBER")
+                .appendField("Name:");
             this.appendDummyInput()
                 .appendField("START");
             this.appendStatementInput("LINES")
@@ -71,20 +73,22 @@ function init_start_end() {
             this.setColour(120);
             this.setTooltip("");
             this.setHelpUrl("");
+            this.setDeletable(false);
         }
     };
 
     NachosGenerator['start_end'] = function(block) {
+        // var number_proj_number = block.getFieldValue('PROJ_NUMBER');
         var value_proj_name = NachosGenerator.valueToCode(block, 'PROJ_NAME', 0);
-        
+
         var proj_name = "";
         if (value_proj_name) {
             proj_name = `' ${value_proj_name}`;
         }
 
         var code_first_block = NachosGenerator.statementToCode(block, 'LINES');
-        var code_all_blocks = NachosGenerator.scrub_(block, code_first_block) 
-        
+        var code_all_blocks = NachosGenerator.scrub_(block, code_first_block)
+
         var code = `${proj_name}\n${code_all_blocks}\nEND`;
         return code;
     };
