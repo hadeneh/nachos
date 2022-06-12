@@ -137,6 +137,21 @@ class MyBlockly extends React.Component {
             sweet("Oops...", "There is nothing to download.", "error", {button: "I KNEW THAT"});
         }
     }
+    upload_workspace = () => {
+        sweet({
+            text: 'Paste XML content here:',
+            content: "input",
+            button: {
+                text: "Load",
+            },
+        }).then(xml_to_load => {
+            if (xml_to_load) {
+                this.simpleWorkspace.current.workspace.clear();
+                const xml = Blockly.Xml.textToDom(xml_to_load);
+                Blockly.Xml.domToWorkspace(xml, this.simpleWorkspace.current.workspace);
+            }
+        })
+    }
 
 
 	render() {
@@ -162,7 +177,9 @@ class MyBlockly extends React.Component {
                                 <li><a href onClick={this.save_workspace}>&lt; Save &gt;</a></li>
                                 <li><a href onClick={this.restore_workspace}>&lt; Restore &gt;</a></li>
                                 <li><a href onClick={this.clear_workspace}>&lt; Clear &gt;</a></li>
+                                <li><a href style={{cursor: "e-resize"}}>XML:</a></li>
                                 <li><a href onClick={this.download_workspace}>&lt; Download &gt;</a></li>
+                                <li><a href onClick={this.upload_workspace}>&lt; Upload &gt;</a></li>
                             </ul>
                             <ul className='nav navbar-nav navbar-right'>
                                 <li><a href style={{cursor: "e-resize"}}>Code:</a></li>
