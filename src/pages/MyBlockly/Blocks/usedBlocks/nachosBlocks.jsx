@@ -144,9 +144,21 @@ function init_movex() {
         var value_interp = block.getFieldValue('INTERPOLATION');
 
 
-        var code = `MOVEX ${value_accuracy}, ${value_acceleration}, ${value_mechanism}, ${value_interp}, ${value_position}, ${value_speed}, H=1, MS`;
-        // TODO: Check the order of each parameter. Can it be changed?
-        // TODO: Also check for whitespaces.
+        var value_comment = "";
+        const position_block = block.getInputTargetBlock('POSITION');
+        if (position_block) {
+            value_comment = position_block.getFieldValue('comment');
+        }
+
+
+        let code = ``;
+        if (value_comment) {
+            code = `MOVEX ${value_accuracy}, ${value_acceleration}, ${value_mechanism}, ${value_interp}, ${value_position}, ${value_speed}, H=1, MS ' ${value_comment}`;
+        }
+        else {
+            code = `MOVEX ${value_accuracy}, ${value_acceleration}, ${value_mechanism}, ${value_interp}, ${value_position}, ${value_speed}, H=1, MS`;
+        }
+
         return code;
     };
 }
@@ -189,10 +201,10 @@ function init_joint() {
         var j4 = block.getFieldValue('j4');
         var j5 = block.getFieldValue('j5');
         var j6 = block.getFieldValue('j6');
-        // var text_comment = block.getFieldValue('comment');
-        // TODO: Assemble JavaScript into code variable.
+        // var text_comment = block.getFieldValue('comment'); // This will be accessed in the "movex" block.
+
         var code = `(${j1}, ${j2}, ${j3}, ${j4}, ${j5}, ${j6})`;
-        // TODO: Change ORDER_NONE to the correct strength.
+
         return [code, NachosGenerator.PRECEDENCE];
       };
 }
@@ -238,10 +250,10 @@ function init_pose() {
         var pose_rx = block.getFieldValue('rx');
         var pose_ry = block.getFieldValue('ry');
         var pose_rz = block.getFieldValue('rz');
-        // var text_comment = block.getFieldValue('comment');
-        // TODO: Assemble JavaScript into code variable.
+        // var text_comment = block.getFieldValue('comment'); // This will be accessed in the "movex" block.
+
         var code = `(${pose_x}, ${pose_y}, ${pose_z}, ${pose_rx}, ${pose_ry}, ${pose_rz})`;
-        // TODO: Change ORDER_NONE to the correct strength.
+
         return [code, NachosGenerator.PRECEDENCE];
       };
       

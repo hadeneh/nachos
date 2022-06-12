@@ -3,6 +3,8 @@ import Split from "react-split";
 import { Link } from "react-router-dom";
 
 import '../css/Coding.css';
+import sweet from 'sweetalert';
+
 
 import Blockly from 'blockly/core';
 import BlocklyComponent from './MyBlockly/BlocklyComponent';
@@ -14,6 +16,7 @@ import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs/components/prism-jsx.js'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 
 
 class MyBlockly extends React.Component {
@@ -76,16 +79,7 @@ class MyBlockly extends React.Component {
             const content = code_output.innerHTML;
             code_output.appendChild(temp_child);
 
-
-            const element = document.createElement('a');
-            element.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(content);
-            element.target = '_blank';
-            element.download = filename;
-            element.style.display = 'none';
-
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
+            download(filename, content);
         }
         else {
             shake("code_box");
@@ -96,15 +90,21 @@ class MyBlockly extends React.Component {
      Workspace Actions
      ************************************/
     save_workspace = () => {
-        if (typeof(Storage) !== "undefined") {
-            const xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
+        const num_blocks = this.simpleWorkspace.current.workspace.getAllBlocks(false).length;
+        if (num_blocks > 0) {
+            if (typeof(Storage) !== "undefined") {
+                const xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
 
-            localStorage.setItem("saved_blocks", Blockly.Xml.domToText(xml));
-            console.log("Workspace Saved.");
-            this.simpleWorkspace.current.workspace.clear();
+                localStorage.setItem("saved_blocks", Blockly.Xml.domToText(xml));
+                console.log("Workspace Saved.");
+                this.simpleWorkspace.current.workspace.clear();
+            }
+            else {
+                sweet("Oops...", "Couldn't save workspace.\nNo Support for Web Storage API.", "error");
+            }
         }
         else {
-            alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
+            sweet("Oops...", "There is nothing to save.", "error", {button: "I KNEW THAT"});
         }
     }
     restore_workspace = () => {
@@ -117,16 +117,41 @@ class MyBlockly extends React.Component {
                 console.log("Workspace Restored.")
             }
             else {
-                alert("No saved workspace.")
+                sweet("Oops...", "No saved workspace found.", "error");
             }
         } 
         else {
-            alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
+            sweet("Oops...", "Couldn't restore workspace.\nNo Support for Web Storage API.", "error");
         }
     }
     clear_workspace = () => {
         this.simpleWorkspace.current.workspace.clear();
+    }
+    download_workspace = () => {
+        const num_blocks = this.simpleWorkspace.current.workspace.getAllBlocks(false).length;
 
+        if (num_blocks > 0) {
+            const xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
+            download("NachosWorkspace.txt", Blockly.Xml.domToText(xml))
+        }
+        else {
+            sweet("Oops...", "There is nothing to download.", "error", {button: "I KNEW THAT"});
+        }
+    }
+    upload_workspace = () => {
+        sweet({
+            text: 'Paste XML content here:',
+            content: "input",
+            button: {
+                text: "Load",
+            },
+        }).then(xml_to_load => {
+            if (xml_to_load) {
+                this.simpleWorkspace.current.workspace.clear();
+                const xml = Blockly.Xml.textToDom(xml_to_load);
+                Blockly.Xml.domToWorkspace(xml, this.simpleWorkspace.current.workspace);
+            }
+        })
     }
 
 
@@ -149,15 +174,18 @@ class MyBlockly extends React.Component {
                     <div className='container'>
                         <div className='collapse navbar-collapse' id='nachos-navbar'>
                             <ul className='nav navbar-nav navbar-left'>
-                                <li><a href style={{cursor: "e-resize"}}>Workspace:</a></li>
-                                <li><a href onClick={this.save_workspace}>&lt; Save &gt;</a></li>
-                                <li><a href onClick={this.restore_workspace}>&lt; Restore &gt;</a></li>
-                                <li><a href onClick={this.clear_workspace}>&lt; Clear &gt;</a></li>
+                                <li><a href style={{cursor: "e-resize", paddingLeft: "0px", paddingRight: "15px"}}>Workspace:</a></li>
+                                <li><a href onClick={this.save_workspace}>&lt;Save</a></li>
+                                <li><a href onClick={this.restore_workspace}>Restore&gt;</a></li>
+                                <li><a href onClick={this.clear_workspace}>&lt;Clear&gt;</a></li>
+                                {/*<li><a href style={{cursor: "e-resize"}}>XML:</a></li>*/}
+                                <li><a href onClick={this.download_workspace}>&lt;Download</a></li>
+                                <li><a href onClick={this.upload_workspace}>Upload&gt;</a></li>
                             </ul>
                             <ul className='nav navbar-nav navbar-right'>
-                                <li><a href style={{cursor: "e-resize"}}>Code:</a></li>
-                                <li><a href onClick={this.generateCode}>&lt; Generate &gt;</a></li>
-                                <li><a href onClick={this.downloadCode}>&lt; Download &gt;</a></li>
+                                <li><a href style={{cursor: "e-resize", paddingRight: "15px"}}>Code:</a></li>
+                                <li><a href onClick={this.generateCode}>&lt;Generate&gt;</a></li>
+                                <li><a href onClick={this.downloadCode} style={{paddingRight: "0px"}}>&lt;Download&gt;</a></li>
                             </ul>
                         </div>
                     </div>
@@ -210,6 +238,18 @@ export default MyBlockly;
 
 function shake(name) {
     document.getElementById(name).classList.toggle("error-shake");
+}
+
+function download(filename, content) {
+    const element = document.createElement('a');
+    element.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(content);
+    element.target = '_blank';
+    element.download = filename;
+    element.style.display = 'none';
+
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
 }
 
 
