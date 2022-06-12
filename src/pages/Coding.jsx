@@ -16,6 +16,7 @@ import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs/components/prism-jsx.js'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 
 
 class MyBlockly extends React.Component {
@@ -173,18 +174,18 @@ class MyBlockly extends React.Component {
                     <div className='container'>
                         <div className='collapse navbar-collapse' id='nachos-navbar'>
                             <ul className='nav navbar-nav navbar-left'>
-                                <li><a href style={{cursor: "e-resize"}}>Workspace:</a></li>
-                                <li><a href onClick={this.save_workspace}>&lt; Save &gt;</a></li>
-                                <li><a href onClick={this.restore_workspace}>&lt; Restore &gt;</a></li>
-                                <li><a href onClick={this.clear_workspace}>&lt; Clear &gt;</a></li>
-                                <li><a href style={{cursor: "e-resize"}}>XML:</a></li>
-                                <li><a href onClick={this.download_workspace}>&lt; Download &gt;</a></li>
-                                <li><a href onClick={this.upload_workspace}>&lt; Upload &gt;</a></li>
+                                <li><a href style={{cursor: "e-resize", paddingLeft: "0px", paddingRight: "15px"}}>Workspace:</a></li>
+                                <li><a href onClick={this.save_workspace}>&lt;Save</a></li>
+                                <li><a href onClick={this.restore_workspace}>Restore&gt;</a></li>
+                                <li><a href onClick={this.clear_workspace}>&lt;Clear&gt;</a></li>
+                                {/*<li><a href style={{cursor: "e-resize"}}>XML:</a></li>*/}
+                                <li><a href onClick={this.download_workspace}>&lt;Download</a></li>
+                                <li><a href onClick={this.upload_workspace}>Upload&gt;</a></li>
                             </ul>
                             <ul className='nav navbar-nav navbar-right'>
-                                <li><a href style={{cursor: "e-resize"}}>Code:</a></li>
-                                <li><a href onClick={this.generateCode}>&lt; Generate &gt;</a></li>
-                                <li><a href onClick={this.downloadCode}>&lt; Download &gt;</a></li>
+                                <li><a href style={{cursor: "e-resize", paddingRight: "15px"}}>Code:</a></li>
+                                <li><a href onClick={this.generateCode}>&lt;Generate&gt;</a></li>
+                                <li><a href onClick={this.downloadCode} style={{paddingRight: "0px"}}>&lt;Download&gt;</a></li>
                             </ul>
                         </div>
                     </div>
