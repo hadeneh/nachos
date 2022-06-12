@@ -143,7 +143,13 @@ function init_movex() {
         var value_accuracy = NachosGenerator.valueToCode(block, 'ACCURACY', NachosGenerator.PRECEDENCE);
         var value_interp = block.getFieldValue('INTERPOLATION');
 
-        var value_comment = block.getInputTargetBlock('POSITION').getFieldValue('comment');
+
+        var value_comment = "";
+        const position_block = block.getInputTargetBlock('POSITION');
+        if (position_block) {
+            value_comment = position_block.getFieldValue('comment');
+        }
+
 
         let code = ``;
         if (value_comment) {
