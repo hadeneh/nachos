@@ -3,6 +3,8 @@ import Split from "react-split";
 import { Link } from "react-router-dom";
 
 import '../css/Coding.css';
+import sweet from 'sweetalert';
+
 
 import Blockly from 'blockly/core';
 import BlocklyComponent from './MyBlockly/BlocklyComponent';
@@ -97,11 +99,11 @@ class MyBlockly extends React.Component {
                 this.simpleWorkspace.current.workspace.clear();
             }
             else {
-                alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
+                sweet("Oops...", "Couldn't save workspace.\nNo Support for Web Storage API.", "error");
             }
         }
         else {
-            alert("Nothing to save...")
+            sweet("Oops...", "There is nothing to save.", "error", {button: "I KNEW THAT"});
         }
     }
     restore_workspace = () => {
@@ -114,11 +116,11 @@ class MyBlockly extends React.Component {
                 console.log("Workspace Restored.")
             }
             else {
-                alert("No saved workspace.")
+                sweet("Oops...", "No saved workspace found.", "error");
             }
         } 
         else {
-            alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
+            sweet("Oops...", "Couldn't restore workspace.\nNo Support for Web Storage API.", "error");
         }
     }
     clear_workspace = () => {
@@ -132,7 +134,7 @@ class MyBlockly extends React.Component {
             download("NachosWorkspace.txt", Blockly.Xml.domToText(xml))
         }
         else {
-            alert("Nothing to download...")
+            sweet("Oops...", "There is nothing to download.", "error", {button: "I KNEW THAT"});
         }
     }
 

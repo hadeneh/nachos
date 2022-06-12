@@ -10,7 +10,8 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.1",
-    "react-split": "^2.0.14"
+    "react-split": "^2.0.14",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "audit": "npm audit fix",
