@@ -76,16 +76,7 @@ class MyBlockly extends React.Component {
             const content = code_output.innerHTML;
             code_output.appendChild(temp_child);
 
-
-            const element = document.createElement('a');
-            element.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(content);
-            element.target = '_blank';
-            element.download = filename;
-            element.style.display = 'none';
-
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
+            download(filename, content);
         }
         else {
             shake("code_box");
@@ -96,15 +87,21 @@ class MyBlockly extends React.Component {
      Workspace Actions
      ************************************/
     save_workspace = () => {
-        if (typeof(Storage) !== "undefined") {
-            const xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
+        const num_blocks = this.simpleWorkspace.current.workspace.getAllBlocks(false).length;
+        if (num_blocks > 0) {
+            if (typeof(Storage) !== "undefined") {
+                const xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
 
-            localStorage.setItem("saved_blocks", Blockly.Xml.domToText(xml));
-            console.log("Workspace Saved.");
-            this.simpleWorkspace.current.workspace.clear();
+                localStorage.setItem("saved_blocks", Blockly.Xml.domToText(xml));
+                console.log("Workspace Saved.");
+                this.simpleWorkspace.current.workspace.clear();
+            }
+            else {
+                alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
+            }
         }
         else {
-            alert("Couldn't save workspace, due to your browser being OLD. (i.e. No Support for Web Storage API)")
+            alert("Nothing to save...")
         }
     }
     restore_workspace = () => {
@@ -126,7 +123,17 @@ class MyBlockly extends React.Component {
     }
     clear_workspace = () => {
         this.simpleWorkspace.current.workspace.clear();
+    }
+    download_workspace = () => {
+        const num_blocks = this.simpleWorkspace.current.workspace.getAllBlocks(false).length;
 
+        if (num_blocks > 0) {
+            const xml = Blockly.Xml.workspaceToDom(this.simpleWorkspace.current.workspace);
+            download("NachosWorkspace.txt", Blockly.Xml.domToText(xml))
+        }
+        else {
+            alert("Nothing to download...")
+        }
     }
 
 
@@ -153,6 +160,7 @@ class MyBlockly extends React.Component {
                                 <li><a href onClick={this.save_workspace}>&lt; Save &gt;</a></li>
                                 <li><a href onClick={this.restore_workspace}>&lt; Restore &gt;</a></li>
                                 <li><a href onClick={this.clear_workspace}>&lt; Clear &gt;</a></li>
+                                <li><a href onClick={this.download_workspace}>&lt; Download &gt;</a></li>
                             </ul>
                             <ul className='nav navbar-nav navbar-right'>
                                 <li><a href style={{cursor: "e-resize"}}>Code:</a></li>
@@ -210,6 +218,18 @@ export default MyBlockly;
 
 function shake(name) {
     document.getElementById(name).classList.toggle("error-shake");
+}
+
+function download(filename, content) {
+    const element = document.createElement('a');
+    element.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(content);
+    element.target = '_blank';
+    element.download = filename;
+    element.style.display = 'none';
+
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
 }
 
 
