@@ -56,41 +56,41 @@ export const MyBlocks = () => {
 			 * Variables
 			************************************/}
 
-			<category name="Variables" colour="330">
-				<category name="Local Integer">
-					<block type="var_set_local_int"></block>
-					<block type="var_get_local_int"></block>
-				</category>
-				<category name="Local Float">
-					<block type="var_set_local_float"></block>
-					<block type="var_get_local_float"></block>
-				</category>
-			</category>
+			{/*<category name="Variables" colour="330">*/}
+			{/*	<category name="Local Integer">*/}
+			{/*		<block type="var_set_local_int"></block>*/}
+			{/*		<block type="var_get_local_int"></block>*/}
+			{/*	</category>*/}
+			{/*	<category name="Local Float">*/}
+			{/*		<block type="var_set_local_float"></block>*/}
+			{/*		<block type="var_get_local_float"></block>*/}
+			{/*	</category>*/}
+			{/*</category>*/}
 
 			{/********************************** 
 			 * Output
 			************************************/}
 
-			<category name="Output" colour="285">
-				<block type="nachos_print"></block>
-			</category>
+			{/*<category name="Output" colour="285">*/}
+			{/*	<block type="nachos_print"></block>*/}
+			{/*</category>*/}
 
-			<sep></sep>
+			{/*<sep></sep>*/}
 
-			<toolboxlabel name="Basic Blocks" img_src="./img/blockly_logo.svg" css-label="customLabel"></toolboxlabel>
-			<sep></sep>
-			<basic.LogicCategoryBlocks />
-			<basic.LoopsCategoryBlocks />
-			<basic.MathCategoryBlocks />
-			<basic.TextCategoryBlocks />
-			<basic.ListsCategoryBlocks />
+			{/*<toolboxlabel name="Basic Blocks" img_src="./img/blockly_logo.svg" css-label="customLabel"></toolboxlabel>*/}
+			{/*<sep></sep>*/}
+			{/*<basic.LogicCategoryBlocks />*/}
+			{/*<basic.LoopsCategoryBlocks />*/}
+			{/*<basic.MathCategoryBlocks />*/}
+			{/*<basic.TextCategoryBlocks />*/}
+			{/*<basic.ListsCategoryBlocks />*/}
 
-			<sep></sep>
+			{/*<sep></sep>*/}
 			
-			<category name="Variables" custom="VARIABLE" colour="%{BKY_VARIABLES_HUE}" />
-			<category name="Functions" custom="PROCEDURE" colour="%{BKY_PROCEDURES_HUE}" />
+			{/*<category name="Variables" custom="VARIABLE" colour="%{BKY_VARIABLES_HUE}" />*/}
+			{/*<category name="Functions" custom="PROCEDURE" colour="%{BKY_PROCEDURES_HUE}" />*/}
 			
-			<sep></sep>
+			{/*<sep></sep>*/}
 		</>
 	);
 }
