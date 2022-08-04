@@ -44,8 +44,8 @@ const HomeNavigation = () => {
 						<li><Link to="/coding">&lt; Start Coding &gt;</Link></li>
 					</ul>
 					<ul className='nav navbar-nav navbar-right'>
-						<li><a href={"https://github.com/hadeneh/nachos/tree/main/docs/manuals"}>Docs</a></li>
-						<li><a href={"https://github.com/hadeneh/nachos/issues"}>Help</a></li>
+						<li><a href={"https://github.com/hadeneh/nachos/tree/main/docs/manuals"} target="_blank" rel="noopener noreferrer">Docs</a></li>
+						<li><a href={"https://github.com/hadeneh/nachos/issues"} target="_blank" rel="noopener noreferrer">Help</a></li>
 					</ul>
 				</div>
 			</div>
