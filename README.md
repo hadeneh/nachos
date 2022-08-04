@@ -2,7 +2,7 @@
   <img src="public/img/logo.png" width="300" alt="Nachos Logo">
 </p>
 
-# <a href="https://nachios.vercel.app" target="_blank">Nachos</a>
+# [Nachos](https://nachios.vercel.app)
 
 Nachos (or NachiOS) is an interface software for Nachi Robotic Manipulator.
 
@@ -59,7 +59,5 @@ The development of the Nachos application was made possible through Blockly's va
 - **Professor Thomas Braunl**
 
 ![Professor Thomas Braunl](docs/assets/prof_braunl.png)
-
 <img src="docs/assets/uwa_logo.png" width="300" alt="University of Western Australia">
-<br>
 <img src="docs/assets/nachi_logo.jpg" width="300" alt="Nachi Robotics Systems Inc.">
