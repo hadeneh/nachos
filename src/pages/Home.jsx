@@ -44,8 +44,8 @@ const HomeNavigation = () => {
 						<li><Link to="/coding">&lt; Start Coding &gt;</Link></li>
 					</ul>
 					<ul className='nav navbar-nav navbar-right'>
-						<li><Link to="/">Docs</Link></li>
-						<li><Link to="/">Help</Link></li>
+						<li><a href={"https://github.com/hadeneh/nachos/tree/main/docs/manuals"}>Docs</a></li>
+						<li><a href={"https://github.com/hadeneh/nachos/issues"}>Help</a></li>
 					</ul>
 				</div>
 			</div>

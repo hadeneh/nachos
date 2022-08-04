@@ -165,7 +165,8 @@ class MyBlockly extends React.Component {
                         </div>
                         <div className='collapse navbar-collapse' id='nachos-navbar'>
                             <ul className='nav navbar-nav navbar-right'>
-                                <li><Link to="/">Docs</Link></li>
+                                <li><a href={"https://github.com/hadeneh/nachos/tree/main/docs/manuals"}>Docs</a></li>
+                                <li><a href={"https://github.com/hadeneh/nachos/issues"}>Help</a></li>
                             </ul>
                         </div>
                     </div>
