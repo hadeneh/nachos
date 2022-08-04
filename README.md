@@ -59,5 +59,5 @@ The development of the Nachos application was made possible through Blockly's va
 - **Professor Thomas Braunl**
 
 ![Professor Thomas Braunl](docs/assets/prof_braunl.png)
-<img src="docs/assets/uwa_logo.png" width="300" alt="University of Western Australia">
-<img src="docs/assets/nachi_logo.jpg" width="300" alt="Nachi Robotics Systems Inc.">
+<img src="docs/assets/uwa_logo.png" height="130" alt="University of Western Australia">
+<img src="docs/assets/nachi_logo.jpg" height="130" alt="Nachi Robotics Systems Inc.">
