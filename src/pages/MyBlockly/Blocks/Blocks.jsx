@@ -77,6 +77,10 @@ export const MyBlocks = () => {
 
 			<sep></sep>
 
+			{/**********************************
+			 * Blockly Blocks
+			 ************************************/}
+
 			<toolboxlabel name="Basic Blocks" img_src="./img/blockly_logo.svg" css-label="customLabel"></toolboxlabel>
 			<sep></sep>
 			<basic.LogicCategoryBlocks />
