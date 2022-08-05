@@ -43,6 +43,9 @@ init_speeds();
 init_acceleration();
 init_accuracy();
 
+init_for_loop();
+init_duplicate();
+init_alterations();
 
 init_var_local_int();
 init_var_local_float();
@@ -86,7 +89,7 @@ function init_start_end() {
         }
 
         var code_first_block = NachosGenerator.statementToCode(block, 'LINES');
-        var code_all_blocks = NachosGenerator.scrub_(block, code_first_block)
+        var code_all_blocks = NachosGenerator.scrub_(block, code_first_block);
 
         var code = `${proj_name}\n${code_all_blocks}\nEND`;
         return code;
@@ -373,17 +376,247 @@ function init_accuracy() {
     NachosGenerator['accuracy'] = function(block) {
         var number_accuracy = block.getFieldValue('ACCU');
         var checkbox_inposition = block.getFieldValue('INPOS') === 'TRUE';
-        // TODO: Assemble JavaScript into code variable.
 
         var code = `A=${number_accuracy}`;
         if (checkbox_inposition) {
             code += "P"
         }
-        // TODO: Change ORDER_NONE to the correct strength.
         return [code, NachosGenerator.PRECEDENCE];
     };
 }
 
+
+function init_for_loop() {
+    Blockly.Blocks['for_loop'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("Count from")
+                .appendField(new Blockly.FieldNumber(1, 1, 2147483647, 1), "FROM")
+                .appendField("to")
+                .appendField(new Blockly.FieldNumber(10, 1, 2147483647, 1), "TO")
+                .appendField("by")
+                .appendField(new Blockly.FieldNumber(1, -2147483647, 2147483647, 1), "BY")
+                .appendField("with variable")
+                .appendField(new Blockly.FieldNumber(1, 1, 200, 1), "VARIABLE");
+            this.appendStatementInput("DO")
+                .setCheck(null)
+                .appendField("do");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(165);
+            this.setTooltip("");
+            this.setHelpUrl("");
+        }
+    };
+
+    NachosGenerator['for_loop'] = function(block) {
+        var number_from = block.getFieldValue('FROM');
+        var number_to = block.getFieldValue('TO');
+        var number_by = block.getFieldValue('BY');
+        var number_variable = block.getFieldValue('VARIABLE');
+
+        var code_first_block = NachosGenerator.statementToCode(block, 'DO');
+        var code_all_blocks = NachosGenerator.scrub_(block, code_first_block);
+
+        var code = `FOR V${number_variable}%=${number_from} TO ${number_to} STEP ${number_by}\n${code_all_blocks}\nNEXT`;
+        return code;
+    };
+}
+
+function init_duplicate() {
+    Blockly.Blocks['duplicate'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("Duplicate")
+                .appendField(new Blockly.FieldNumber(1, 2, 2147483647, 1), "REPEAT")
+                .appendField("times");
+            this.appendStatementInput("DO")
+                .setCheck("movex")
+                .setAlign(Blockly.ALIGN_RIGHT)
+                .appendField("do");
+            this.appendValueInput("ALTERS")
+                .setCheck("Array")
+                .setAlign(Blockly.ALIGN_RIGHT)
+                .appendField("Alterations:");
+            this.setInputsInline(false);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(165);
+            this.setTooltip("ONLY THE FIRST MOVE BLOCK IS USED. ALL OTHER BLOCKS ARE IGNORED.");
+            this.setHelpUrl("");
+        }
+    };
+
+    NachosGenerator['duplicate'] = function(block) {
+        var number_repeat = block.getFieldValue('REPEAT');
+        var code_blocks = NachosGenerator.statementToCode(block, 'DO');
+        var value_alters = NachosGenerator.valueToCode(block, 'ALTERS', NachosGenerator.PRECEDENCE);  // See "lists_create_with" block in "basicBlocks_Generators()" function.
+
+        let movements = code_blocks.split("\n");
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Test 1: Is only ONE block been provided?
+        if (movements.length > 1) {
+            return "ERROR: You can only use ONE movement block for duplication.";
+        }
+
+        let first_block = movements[0];
+        let code = `${first_block}\n`;
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Test 2: Is the MOVEX command been given for duplication?
+        if (first_block.slice(0, 5) != "MOVEX") {
+            return "ERROR: You can only use MOVEX blocks for duplication.";
+        }
+
+        let [,
+            command,
+            accuracy,
+            acceleration,
+            smoothness,
+            mechanism,
+            interpolation,
+            position,
+            speed,
+            tool,
+            others
+        ] = code_blocks.match(/(MOVEX)\s(A=.+?),\s(AC=\d+),\s(SM=\d+),\s(M1.),\s(.+?),\s\((.*?)\),\s(.=\d+),\s(H=\d+),\s(MS)/); // REGEX for implemented Movement command
+        // console.log({command, accuracy, acceleration, smoothness, mechanism, interpolation, values, speed, tool, other});
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Test 3: Does the provided alterations and movement block (joint vs pose) match?
+        let alterations = value_alters.split(", ");
+        let isJoint = mechanism.slice(2, 3) == "J";
+        for (let a = 0; a < alterations.length; a++){
+            if (isJoint) {
+                if (alterations[a][0] != "J") {
+                    return "ERROR: The provided alterations does NOT match the MOVEX command.";
+                }
+            }
+            else {
+                if (alterations[a][0] != "P") {
+                    return "ERROR: The provided alterations does NOT match the MOVEX command.";
+                }
+            }
+        }
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Code Generation
+
+        let pos_values = position.split(", ").map(Number);
+
+        function apply_math(val, math, num) {
+            switch (math) {
+                case "add":
+                    return val + num;
+                case "sub":
+                    return val - num;
+                case "mul":
+                    return val * num;
+                case "div":
+                    return val / num;
+                case "pow":
+                    return val ** num;
+                default:
+                    break;
+            }
+        }
+
+        function apply_changes(pos, math, num) {
+            switch (pos) {
+                case "j1":
+                case "tx":
+                    pos_values[0] = apply_math(pos_values[0], math, num)
+                    break;
+                case "j2":
+                case "ty":
+                    pos_values[1] = apply_math(pos_values[1], math, num)
+                    break;
+                case "j3":
+                case "tz":
+                    pos_values[2] = apply_math(pos_values[2], math, num)
+                    break;
+                case "j4":
+                case "rx":
+                    pos_values[3] = apply_math(pos_values[3], math, num)
+                    break;
+                case "j5":
+                case "ry":
+                    pos_values[4] = apply_math(pos_values[4], math, num)
+                    break;
+                case "j6":
+                case "rz":
+                    pos_values[5] = apply_math(pos_values[5], math, num)
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        let alter;
+        for (let i = 1; i < number_repeat; i++) {
+            for (let k = 0; k < alterations.length; k++){
+                alter = alterations[k].split("_"); // Splitting each ALTER command into its components.
+                apply_changes(alter[1], alter[2], parseInt(alter[3])); // Applying each ALTER command and making changes.
+            }
+            code += `${command} ${accuracy}, ${acceleration}, ${smoothness}, ${mechanism}, ${interpolation}, (${pos_values.join(", ")}), ${speed}, ${tool}, ${others}\n`
+        }
+
+        return code.slice(0, -1); // Dropping the final newline.
+    };
+}
+
+function init_alterations() {
+    Blockly.Blocks['joint_alteration'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("Joint update")
+                .appendField(new Blockly.FieldDropdown([["J1","j1"], ["J2","j2"], ["J3","j3"], ["J4","j4"], ["J5","j5"], ["J6","j6"]]), "JOINT")
+                .appendField(new Blockly.FieldDropdown([["+","add"], ["-","sub"], ["x","mul"], ["/","div"], ["^","pow"]]), "MATH")
+                .appendField(new Blockly.FieldNumber(2), "NUM");
+            this.setInputsInline(true);
+            this.setOutput(true, null);
+            this.setColour(270);
+            this.setTooltip("");
+            this.setHelpUrl("");
+        }
+    };
+    Blockly.Blocks['pose_alteration'] = {
+        init: function() {
+            this.appendDummyInput()
+                .appendField("Pose update")
+                .appendField(new Blockly.FieldDropdown([["X","tx"], ["Y","ty"], ["Z","tz"], ["Rx","rx"], ["Ry","ry"], ["Rz","rz"]]), "POSE")
+                .appendField(new Blockly.FieldDropdown([["+","add"], ["-","sub"], ["x","mul"], ["/","div"], ["^","pow"]]), "MATH")
+                .appendField(new Blockly.FieldNumber(2), "NUM");
+            this.setInputsInline(true);
+            this.setOutput(true, null);
+            this.setColour(270);
+            this.setTooltip("");
+            this.setHelpUrl("");
+        }
+    };
+
+    NachosGenerator['joint_alteration'] = function(block) {
+        var dropdown_joint = block.getFieldValue('JOINT');
+        var dropdown_math = block.getFieldValue('MATH');
+        var number_num = block.getFieldValue('NUM');
+
+        var code = `J_${dropdown_joint}_${dropdown_math}_${number_num}`;
+        return [code, NachosGenerator.PRECEDENCE];
+    };
+    NachosGenerator['pose_alteration'] = function(block) {
+        var dropdown_pose = block.getFieldValue('POSE');
+        var dropdown_math = block.getFieldValue('MATH');
+        var number_num = block.getFieldValue('NUM');
+        var code = `P_${dropdown_pose}_${dropdown_math}_${number_num}`;
+        return [code, NachosGenerator.PRECEDENCE];
+    };
+}
 
 
 function init_outputs() {
@@ -510,6 +743,25 @@ function basicBlocks_Generators() {
     NachosGenerator['text'] = function(block) {
         var code = block.getFieldValue('TEXT');
         return [code, NachosGenerator.PRECEDENCE];
+    };
+
+    // NachosGenerator['math_number'] = function(block) {
+    //     var code = block.getFieldValue('NUM');
+    //     return [code, NachosGenerator.PRECEDENCE];
+    // };
+
+    NachosGenerator['lists_create_with'] = function(block) {
+        const size = block.itemCount_;
+        let item = "";
+        let code = "";
+
+        for (let i = 0; i < size; i++) {
+            item = NachosGenerator.valueToCode(block, "ADD"+i, NachosGenerator.PRECEDENCE);
+            if (item != "") {
+                code += `${item}, `;
+            }
+        }
+        return [code.slice(0, -2), NachosGenerator.PRECEDENCE];
     };
 }
 

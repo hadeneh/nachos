@@ -52,6 +52,25 @@ export const MyBlocks = () => {
         	</category>
 
 
+			{/**********************************
+			 * Loop Category
+			 ************************************/}
+
+			<category name="Loops" colour="165">
+				<block type="for_loop"></block>
+				<block type="duplicate"></block>
+				<block type="lists_create_with">
+					<mutation items="3"></mutation>
+					<value name="ADD0"><shadow type="joint_alteration"></shadow></value>
+				</block>
+				<block type="lists_create_with">
+					<mutation items="3"></mutation>
+					<value name="ADD0"><shadow type="pose_alteration"></shadow></value>
+				</block>
+				<block type="joint_alteration"></block>
+				<block type="pose_alteration"></block>
+			</category>
+
 			{/********************************** 
 			 * Variables
 			************************************/}
